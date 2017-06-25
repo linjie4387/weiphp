@@ -1,0 +1,283 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>我接的单</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="我接的单">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;}
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.c-y { color: #F37B1D;}
+		.c-r { color:#E43048;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.bg-f { background-color:#FFFFFF;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		.div-w-inbox { display: -webkit-inline-box;}
+		
+		.search-box { position:relative;}
+		.search-box input { padding-right:10px !important;padding-left:30px !important;}
+		.search-box button { position:absolute;right:0;bottom:0;border: 1px solid #CCCCCC;}
+		.search-box i { position:absolute;left:0;bottom:0;}
+		
+		.dateymd-box input { padding-right: 25px !important;background-color: #FFF !important;}
+		.dateymd-box .am-icon-times { position:absolute;top:6px;right:10px;}
+		
+		.btn-select { color: #555;background-color: #FFFFFF;border: 1px solid #D2D2D2;text-align: left;}
+				
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button{
+			-webkit-appearance: none !important;
+			margin: 0; 
+		}
+		
+		.list-tabs .am-tabs-nav li { width:33.333333%;text-align:center;}
+		.items-list li{ position:relative;background-color:#FFFFFF;color:#333;}
+		.items-list li:before { content:"";position:absolute;height:100%;width:2px;background-color:#0B75E3;left:-5px;top:0;}
+		.items-list li .right-box { position: absolute;height: 100%;width: 41%;right: 0;top:0;}
+		.btn-tab { display:none;}
+		
+		.div-w-inbox { border-bottom:1px solid #EAEAEA;}
+		.div-w-inbox-1:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#E54E47;}
+		.div-w-inbox-2:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#04BF77;}
+		.div-w-inbox-3:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#43BCFC;}
+		.div-w-inbox-4:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#F9AE49;}
+		
+		.bg{
+			width:100%;
+			height:20px;
+			background:#E66629;
+			background-image:-webkit-gradient(linear,50% 0,0 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)    
+							),
+							-webkit-gradient(linear,50% 0,100% 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)                                            
+							);
+			background-image:-moz-linear-gradient(50% 0 -45deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							),-moz-linear-gradient(50% 0 -135deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							);                                
+			background-size:13px 6px;
+			background-repeat:repeat-x;
+			background-position:0 100%;                    
+		}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<section>
+	<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg" style="color:#FFFFFF;">
+        
+    </fieldset>
+    <div class="w-100 am-margin-bottom-sm"></div>
+    <div class="am-padding-vertical-sm bg-f am-padding-horizontal-xs">
+        <form action="" class="am-form">
+            <div class="am-form-group am-g am-g-collapse am-margin-top-xs am-margin-bottom-0">
+                <div class="am-form-group am-u-sm-5 am-margin-0 dateymd-box">
+                    <input type="text" id="dateymd" name="dateymd" class="am-form-field" placeholder="日期" data-am-datepicker readonly />
+                    <span class="am-icon-times"></span>
+                </div>
+                <div class="am-form-group search-box am-u-sm-7 am-margin-0">
+                    <i class="am-btn am-padding-horizontal-xs am-icon-search"></i>
+                    <input type="text" id="keyword" name="key" value="" placeholder="用户名/昵称/电话" class="am-form-field" required/>
+                </div>
+            </div>
+        </form>
+        <div class="am-margin-top-sm am-text-center"><button type="button" onClick="dosearch();" class="am-btn am-btn-primary am-text-sm w-80">搜 索</button></div>
+    </div>
+    <hr data-am-widget="divider" style="" class="am-divider am-divider-default am-margin-top-0" />
+    <div class="am-tabs list-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+        <ul class="am-tabs-nav am-nav am-nav-tabs">
+            <li class="am-active"><a id="tab1" href="javascript: void(0)">全 部</a></li>
+            <li><a id="tab2" href="javascript: void(0)">待发货</a></li>
+            <li><a id="tab3" href="javascript: void(0)">已发货</a></li>
+        </ul>
+        <div class="am-tabs-bd border-n">
+        	<div class="am-tab-panel am-padding-0 am-active" data="tab1">
+            	<ul class="am-g items-list list1">
+                    
+                </ul>
+                <div class="am-text-center am-margin-vertical-xs"><button type="button" onClick="getmore('tab1',false)" class="am-btn am-btn-primary am-text-sm w-80 btn-tab btn-tab1">加载更多</button></div>
+            </div>
+            <div class="am-tab-panel am-padding-0" data="tab2">
+            	<ul class="am-g items-list list2">
+                   
+                </ul>
+                <div class="am-text-center am-margin-vertical-xs"><button type="button" onClick="getmore('tab2',false)" class="am-btn am-btn-primary am-text-sm w-80 btn-tab btn-tab2">加载更多</button></div>
+            </div>
+            <div class="am-tab-panel am-padding-0" data="tab3">
+            	<ul class="am-g items-list list3">
+                    
+                </ul>
+                <div class="am-text-center am-margin-vertical-xs"><button type="button" onClick="getmore('tab3',false)" class="am-btn am-btn-primary am-text-sm w-80 btn-tab btn-tab3">加载更多</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="blank-1"></div>
+</section>
+
+<script src="http://cdn.staticfile.org/handlebars.js/4.0.5/handlebars.min.js" type="text/javascript"></script>
+<script>
+	Handlebars.registerHelper("setstatus",function(status,feedback){
+		if(feedback==1||feedback==110) return '维权中';
+		if(status == "WAIT_SELLER_SEND_GOODS"){
+			return '待发货';
+		}else if(status == "WAIT_BUYER_CONFIRM_GOODS" || status == "TRADE_BUYER_SIGNED"){
+			return '已发货';
+		}else if(status == "TRADE_CLOSED"){
+			return "被取消";
+		}else{
+			return "";	
+		}
+	});
+</script>
+<script type="text/x-handlebars-template" id="tpi-list-item">
+	{{#each this}}
+	<a href="{:U('addon/OrderShip/OrderShip/myorderdetail')}&tid={{tid}}">
+	<li class="am-u-sm-12 am-margin-bottom-sm am-padding-top-xs am-padding-bottom-sm am-padding-horizontal-sm am-g-collapse">
+		<div class="am-u-sm-12 am-text-sm am-padding-vertical-xs am-margin-bottom-xs div-w-inbox div-w-inbox-1">
+			订单号：{{tid}}
+		</div>
+		<div class="am-u-sm-12">
+			<div class="am-u-sm-12 am-text-sm f-w-6">
+				<div class="am-u-sm-12">下单时间：{{created}}<span class="am-fr am-badge am-badge-warning" style="border-radius:5em;">{{setstatus status feedback}}</span></div>
+				<div class="am-u-sm-12">昵称：{{buyer_nick}}</div>
+			</div>
+			<div class="am-u-sm-12 am-text-sm c-g">{{receiver_name}}<span class="am-padding-left-sm">{{receiver_address}}</span></div>  
+			<div class="am-text-right right-box am-vertical-align">
+				<div class="am-vertical-align-middle">
+				<span class="c-r">{{payment}}元</span>
+				</div>
+			</div>                
+		</div>                
+	</li>
+	</a>
+	{{/each}}
+</script>
+<script>
+	var is_ajax = false;
+	var curobj = {
+			'pagesize':20,
+			'tab1':{page:1,isend:false,list:'.list1',btn:'.btn-tab1',is_first:false,url:"{:U('addon/OrderShip/OrderShip/listmyorder')}"},
+			'tab2':{page:1,isend:false,list:'.list2',btn:'.btn-tab2',is_first:true,url:"{:U('addon/OrderShip/OrderShip/listmyundeliverorder')}"},
+			'tab3':{page:1,isend:false,list:'.list3',btn:'.btn-tab3',is_first:true,url:"{:U('addon/OrderShip/OrderShip/listmydeliveredorder')}"}
+		};
+  	function getmore(tab,is_search){
+		if(is_ajax){
+			return;	
+		}
+		var cur = curobj[tab];
+		if(is_search){
+			curobj[tab].isend = false;
+			curobj[tab].page = 1;
+		}
+		if(cur.isend){
+			comm_alert_e_y("没有更多啦");		
+			return;
+		}
+		
+		var param = {};
+		var has_param = false;
+		var key_dateymd = $("#dateymd").val();
+		var key_word = $("#keyword").val();
+		if(key_dateymd!=''){
+			param['dateymd'] = key_dateymd;
+			has_param = true;
+		}
+		if(key_word!=''){
+			param['key'] = key_word;
+			has_param = true;
+		}
+		param['page'] = cur.page;
+		param['pagesize'] = curobj['pagesize'];
+		
+		
+		is_ajax = true;
+		var $list = $(cur.list);
+		var $btn = $(cur.btn);
+				
+		$.post(cur.url,param,function(data) {
+			console.log(data);
+			var info = data.orderlist;
+			if(info == null){
+				if(is_search){
+					$list.html('<li class="am-text-center am-padding-vertical-sm">暂无数据</li>');
+				}else{
+					curobj[tab].isend = true;
+					comm_alert_e_y("没有更多啦！");						
+				}
+				$btn.hide();
+			}else{
+				this.compiler = Handlebars.compile($('#tpi-list-item').html());
+				var htm = this.compiler(info);
+				if(is_search){
+					$list.html(htm);
+				}else{
+					$list.append(htm);
+				}
+				if(data.length<curobj['pagesize']){
+					curobj[tab].isend = true;
+					$btn.hide();
+				}else{
+					$btn.show();	
+				}
+				curobj[tab].page = curobj[tab].page+1;
+			}
+			is_ajax = false;				
+		});
+	}
+	
+	function dosearch(){
+		var curtab = $("#doc-tab-demo-1").find(".am-active a").attr("id");
+		getmore(curtab,true);
+	}
+	
+	$(function(){
+		$('#doc-tab-demo-1').find('a').on('opened.tabs.amui', function(e) {
+			var scur = curobj[this.id];
+			if(scur.is_first){
+				getmore(this.id,true);
+				curobj[this.id]['is_first'] = false;
+			}
+		});
+		$(".dateymd-box .am-icon-times").on('click',function(){
+			$("#dateymd").val('');
+		});
+		getmore('tab1',true);
+	});
+</script>
+</body>
+</html>

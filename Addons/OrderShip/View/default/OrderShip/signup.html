@@ -1,0 +1,98 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>用户注册</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="用户注册">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.search-box { position:relative;}
+		.search-box input { padding-right:50px !important;}
+		.search-box button { position:absolute;right:0;bottom:0;}
+		
+		.hos-box-sel { display:none;}
+		.btn-select { color: #555;background-color: #FFFFFF;border: 1px solid #D2D2D2;text-align: left;}
+		
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<div id="op_loadbox"><span class="am-icon-spinner am-icon-spin"></span><span class="msg">加载中...</span></div>
+<section class="am-padding-xs bg-f">
+    <form action="{:U('addon/OrderShip/OrderShip/signup')}" method="post" class="am-form" onSubmit="return check();">
+        <div class="am-tabs-bd border-n">
+            <div class="am-tab-panel am-padding-0 am-active">
+            <fieldset>
+                <legend class="am-margin-0 am-padding-vertical-sm am-text-lg c-g"><span class="title">填写注册资料</span></legend>
+                <div class="am-form-group">
+                    <label for="shop">门店：</label>
+                    <select id="shop" name="shop" required>
+                        <option value="-1">--选择门店--</option>
+                        <volist name="shoplist" id="shop_item">
+                        <option value="{$shop_item.shop_id}">{$shop_item.shop_name}</option>
+                        </volist>
+                    </select>
+                    <span class="am-form-caret"></span>
+                </div>
+                <div class="am-form-group">
+                    <label for="user_name">姓名</label>
+                    <input type="text" id="user_name" name="name" minlength="1" placeholder="输入姓名" class="am-form-field" required/>
+                </div>
+                <div class="am-form-group">
+                    <label for="user_phone">手机号码</label>
+                    <input type="text" id="user_phone" name="mobile" minlength="5" placeholder="输入手机号" class="am-form-field" required/>
+                </div>
+                <div class="am-form-group am-text-center">
+                    <button class="am-btn am-btn-secondary w-80" type="submit">提交</button>
+                </div>
+            </fieldset>
+            </div>
+        </div>
+    </form>
+    <script>
+		
+		var is_ajax = false;
+
+		function check(){
+			if($("#shop").val() == '-1'){
+				comm_alert_e_y("请选择门店！");	
+				return false;
+			}			
+			if($("#user_name").val() == ''){
+				comm_alert_e_y("请输入姓名");	
+				return false;
+			}
+			if($("#user_phone").val() == ''){
+				comm_alert_e_y("请输入电话");	
+				return false;
+			}
+			show_load('处理中...');
+			return true;
+		}
+	</script>
+</section>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>个人中心</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="个人中心">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		ul,li { list-style:none;}
+		hr { border-top: 1px solid #ccc;}
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-80 { width:80%;}
+		.w-90 { width:90%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.p-horizontal-15 { padding:0 15px !important;}
+		
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		.border-g-ts { border-top:1px solid #ccc;}
+		.border-g-bs { border-bottom:1px dashed #ccc;}
+		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.blank-title { background-color:#A8B5C5;color:#FFFFFF;border-radius: 5px;}
+		.goods-list li { position:relative;}
+		.goods-list li .content-number { position: absolute;height: 100%;width: 20%;right: 10%;top:0;}
+		.goods-list li .content-more { position: absolute;height: 100%;width: 10%;right: 0;top:0;}
+		.goods-list li .off { display:none;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<section id="item-box" class="am-padding-xs am-padding-horizontal-sm">
+	<fieldset class="am-margin-0 am-padding-bottom-0">
+        <legend class="am-margin-0 am-padding-vertical-sm am-text-lg"><span class="title">个人中心</span></legend>        
+    </fieldset>
+    <div class="am-padding-xs am-text-sm blank-title">个人信息</div>
+    <ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+        <li class="am-u-sm-12 am-padding-vertical-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left f-w-6">名 称：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$user.name}</div>
+        </li>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12 am-padding-vertical-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left f-w-6">手 机：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$user.mobile}</div>
+        </li>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12 am-padding-vertical-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left f-w-6">所属门店：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$user.shop_name}</div>
+        </li>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12 am-padding-vertical-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left f-w-6">状 态：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$user.status_name}</div>
+        </li>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12 am-padding-vertical-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left f-w-6">备注：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$user.remark}</div>
+        </li>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+	</ul>
+</section>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>历史订单</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="历史订单">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+	
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;min-height:100vh;}
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.c-r { color:#E43048;}
+		.c-y { color:#D86833;}
+		.bg-f { background-color:#FFFFFF;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.blank-1 { width:100%;height:1em;}
+		
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.img-box { display: none;position: fixed;z-index: 1000;width: 100%;height: 100%;top: 0;left: 0;background-color: #000;}
+		.img-box img { border-radius:5px;width: 60%;top: 20%;position: absolute;left: 20%;z-index:100;}
+		
+		#item-box input,textarea { color:#333 !important;}
+				
+		#item-list { background-color:#F1F1F1;}
+		#item-list li{ position:relative;color:#333;background-color:#FFFFFF;}
+		#item-list li .right-box { position: absolute;height: 100%;width: 25%;right: 0;top:0;}
+		
+		.am-icon-close { display:none;color: #FFF;z-index: 1001;position: absolute;right: 20px;top: 30px;}
+		
+		.blank-title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.border-r5 { border-radius:0.5em;}
+		.div-w-inbox { border-bottom:1px solid #EAEAEA;}
+		.div-w-inbox-1:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#E54E47;}
+		.div-w-inbox-2:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#F9AE49;}
+		.div-w-inbox-3:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#43BCFC;}
+		.div-w-inbox-4:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#04BF77;}
+		.div-w-inbox-5:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#E54E47;}
+		
+		.bg{
+			width:100%;
+			height:20px;
+			background:#E66629;
+			background-image:-webkit-gradient(linear,50% 0,0 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)    
+							),
+							-webkit-gradient(linear,50% 0,100% 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)                                            
+							);
+			background-image:-moz-linear-gradient(50% 0 -45deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							),-moz-linear-gradient(50% 0 -135deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							);                                
+			background-size:13px 6px;
+			background-repeat:repeat-x;
+			background-position:0 100%;                    
+		}
+		
+		/* all sign style
+		.ratyli .rate{color: #ccc; font-size: 24px;}
+		 */
+		 .ratyli .rate{color: #fe5845; font-size: 24px;}
+		
+		/* empty sign style */
+		.ratyli .rate-empty{color: #666;}
+		
+		/* full sign style after rating*/
+		.ratyli.rated .rate-full{color: #fe5845;}
+		
+		/* active signs (hover)*/
+		.ratyli .rate-active{color: #a94039;}
+		.demo{float:left; width:18%; padding:30px 1%; text-align:center;}
+		@media screen and (max-width: 920px) {
+			.demo{float:none; width:90%; padding:20px 5%;}
+		}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<i onClick="showclose();" class="am-icon-close am-text-xxl"></i>
+<div id="component" class="img-box"><img id="container" src=""></div>
+<div id="op_loading"><span class="op-loading" ><i class="am-icon-spinner am-icon-spin"></i><i class="msg">加载中...</i></span></div>
+
+<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg"></fieldset>
+<div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+    <ul class="am-hide am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active"><a id="tab1" href="javascript: void(0)"></a></li>
+        <li><a id="tab2" href="javascript: void(0)"></a></li>
+    </ul>
+    <div class="am-tabs-bd border-n">
+    <div class="am-tab-panel am-padding-0 am-active">
+        <section class="list-box">
+        	<div class="am-u-sm-12 am-margin-bottom-sm"></div>
+            <ul id="item-list" class="am-g am-padding-0"></ul>
+        </section>
+        <div id="no_order" class="am-text-center"></div>
+    </div>
+    <div class="am-tab-panel am-padding-0">
+		<div class="blank-1"></div>
+        <section id="item-box"></section>
+    </div>
+    </div>
+</div>
+<script src="http://cdn.staticfile.org/handlebars.js/4.0.5/handlebars.min.js" type="text/javascript"></script>
+<script>
+Date.prototype.format =function(format){
+	var o = {
+		"M+" : this.getMonth()+1, //month
+		"d+" : this.getDate(),    //day
+		"h+" : this.getHours(),   //hour
+		"m+" : this.getMinutes(), //minute
+		"s+" : this.getSeconds(), //second
+		"q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+		"S" : this.getMilliseconds() //millisecond
+	}
+	if(/(y+)/.test(format)) format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4- RegExp.$1.length));
+	for(var k in o)if(new RegExp("("+ k +")").test(format))
+	format = format.replace(RegExp.$1,
+	RegExp.$1.length==1? o[k] :
+	("00"+ o[k]).substr((""+ o[k]).length));
+	return format;
+}
+Handlebars.registerHelper("setstatuscss",function(status){
+	if(status==1){
+		return 'am-badge-warning';
+	}else if(status==2){
+		return 'am-badge-warning';
+	}else if(status==3){
+		return 'am-badge-primary';
+	}else if(status==4){
+		return 'am-badge-success';
+	}else if(status==5){
+		return 'am-badge-danger';
+	}else{
+		return 'am-btn-success';
+	}
+});
+
+Handlebars.registerHelper("setremark",function(remark){
+	if(remark==null||remark==""){
+		return 'am-hide';
+	}else{
+		return '';
+	}
+});
+Handlebars.registerHelper("hasremark",function(remark){
+	if(remark==null||remark==""){
+		return '';
+	}else{
+		return 'am-margin-top-sm';
+	}
+});
+Handlebars.registerHelper("setstatus",function(status){
+	if(status!=2){
+		return 'am-hide';
+	}else{
+		return '';
+	}
+});
+
+Handlebars.registerHelper("setappraise",function(status){
+	if(status!=4){
+		return 'am-hide';
+	}else{
+		return '';
+	}
+});
+
+Handlebars.registerHelper("setappraisebtn",function(appraise){
+	if(appraise){
+		return 'am-hide';
+	}else{
+		return '';
+	}
+});
+
+Handlebars.registerHelper("setappraisename",function(appraise){
+	if(appraise==1){
+		return '1分 很不满意';
+	}else if (appraise==2){
+		return '2分 不满意';
+	}else if (appraise==3){
+		return '3分 一般';
+	}else if (appraise==4){
+		return '4分 满意';
+	}else if (appraise==5){
+		return '5分 很满意';
+	}else {
+		return '';
+	}
+});
+
+Handlebars.registerHelper("setpadding",function(remark){
+	if(remark==null||remark==""){
+		return 'am-padding-vertical-sm';
+	}else{
+		return 'am-padding-vertical-xs';
+	}
+});
+//注册一个翻译用的Helper，0翻译成男，1翻译成女
+Handlebars.registerHelper("transformat",function(value){
+	return (new Date(value.replace(/-/g,'/')).format('MM-dd hh:mm'));	
+});
+</script>
+<script type="text/x-handlebars-template" id="tpi-list-item">
+	{{#each this}}
+	<a href="javascript:showdetail({{hospitalorder_id}},{{order_id}});">
+	<li class="am-u-sm-12 am-margin-bottom-sm am-padding-top-xs am-padding-bottom-sm am-g-collapse">
+		<div class="am-u-sm-12 am-text-sm am-padding-vertical-xs am-margin-bottom-xs div-w-inbox div-w-inbox-{{status}}">
+			{{hospital_name}}
+			<span class="am-badge {{setstatuscss status}} am-fr border-r5">{{status_name}}</span>
+		</div>
+		<div class="am-u-sm-12">
+			<div class="am-u-sm-12 am-text-sm">
+				<div class="am-u-sm-12">预/正式订单号：{{hospitalorder_id}}/{{order_id}}</div>
+				<div class="am-u-sm-12">时间：{{preapply_time}}</div>
+				<div class="am-u-sm-12">类型：{{order_type_name}}</div>
+			</div>
+			<div class="am-u-sm-12 am-text-sm c-g">备注：{{remark}}</div> 
+		</div>                
+	</li>
+	</a>
+	{{/each}}
+</script>
+<script type="text/x-handlebars-template" id="tpi-item-obj">
+	<div class="am-padding-xs am-text-sm blank-title"><span onClick="goback();"><i class="am-icon-chevron-left am-margin-right-xs"></i><i class="am-icon-building-o am-text-lg"></i>&nbsp;&nbsp;订单信息</span></div>
+	<ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f am-margin-bottom-sm">
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">医院：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{hospital_name}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">科室：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{office_name}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">接单公司：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{order_company_name}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">订单类型：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{order_type_name}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">备注：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{remark}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">接单备注：</div>
+			<div class="am-u-sm-8 am-text-sm am-text-right c-y">{{admin_remark}}</div>
+		</li>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+		<li class="am-u-sm-12 am-padding-vertocal-xs">
+			<div class="am-u-sm-4 am-text-sm am-text-left">采购单照片：</div>
+			<div class="am-u-sm-12 am-text-sm am-text-left c-y">
+				<div id="img_list">
+					{{#each piclist}}
+						 <img onClick="showimg(this);" class="list-img" src="{{pic_url}}">
+					{{/each}}
+				</div>
+			</div>
+		</li>
+	</ul>
+	<div class="am-padding-vertical-sm am-text-center {{setstatus status}}">
+		<input type="hidden" name="hospitalorder_id" id="hospitalorder_id" value="" />
+		<input type="hidden" name="order_id" id="order_id" value="" />
+		<a id="btnSubmit" href="javascript:reloadOrder();" class="am-btn am-btn-success am-text-sm w-90 border-r-5">刷 新</a>&nbsp;&nbsp;
+		<a id="btnSubmit" href="javascript:confirmOrder();" class="am-btn am-btn-warning am-text-sm w-90 border-r-5">订单确认</a>		
+	</div>
+
+	<div style="display:none" class="am-padding-vertical-sm am-text-center {{setappraise status}}">
+		<div id="demo2" class="demo">
+			<h3>服务质量：<span class="ratyli" data-rate="{{appraise}}" data-ratemax="5"></span><span id="rank_name" style="padding-left:5px;">{{setappraisename appraise}}</span></h3>
+        	<input type="hidden" id="rank" value="{{appraise}}">
+			<h3>内容：
+			<textarea name="appraise_comment" id="appraise_comment" maxlength="200">{{appraise_comment}}</textarea>
+			</h3>
+			<a id="btnRank" href="javascript:rank();" class="am-btn am-btn-warning am-text-sm w-180 border-r-5 {{setappraisebtn appraise}}">评价</a>		
+    	</div>
+	</div>
+	&nbsp;&nbsp;<a id="evaluated" href="#" onclick="goEvaluate({{order_id}})" class="am-btn am-btn-warning am-text-sm w-90 border-r-5 {{setappraisebtn appraise}}">&nbsp;&nbsp;&nbsp;查看评价&nbsp;&nbsp;&nbsp;</a>
+</script>
+<script type="text/x-handlebars-template" id="tpi-img-obj">
+    <img onClick="showimg(this);" class="list-img" src="{{pic_url}}">
+</script>
+<script>
+	var _list = {};
+	
+	(function($) {
+		var EventsList = function(element, options) {
+			var $loader = $('#op_loading');
+			var $list = $('#item-list');
+			this.compiler = Handlebars.compile($('#tpi-list-item').html());
+			this.prev = this.next = this.start = options.params.start;
+			this.is_end = false;
+			this.is_ajax = false;
+			
+			this.getURL = function(params) {
+				return options.api;
+			};
+	
+			this.renderList = function(curpage) {
+				var _this = this;
+				_this.is_ajax = true;
+				$loader.show();
+				$.post(this.URL,{pagesize:options.params.pagesize,page:curpage},function(data) {
+					var info = data.info.orders;
+					
+					if(info!=null){
+						var html = _this.compiler(info);
+						$list.append(html);
+						
+						for(var i=0;i<info.length;i++){
+							_list['o_'+info[i].hospitalorder_id] = info[i];
+						}
+						
+						if(info.length<options.params.pagesize){
+							_this.is_end = true;
+						}
+					}else{
+						if(curpage==1){
+							$('#no_order').html("您尚未提交过订单。");
+						}else{
+							$('#no_order').html("");
+						}
+						_this.is_end = true;	
+					}
+					
+					_this.is_ajax = false;
+					$loader.hide();
+				});
+			};
+		
+			this.init = function() {
+				var _this = this;	
+				this.URL = this.getURL(options.params);
+				$(".list-box").on('touchmove', function() {
+					if(($('body').scrollTop()+$(window).height()) >= $('body').height()){
+						_this.handlePullUp();	
+					}
+				});
+				_this.handlePullUp();
+			};
+		
+			this.handlePullUp = function() {
+				if(this.is_end){
+					$("#op_loading .op-loading").html("没有更多啦！");
+					$loader.show();
+					setTimeout(function(){ $loader.hide();},2000);
+					return;
+				}
+				if(this.is_ajax){
+					return;	
+				}
+				this.next += 1;
+				this.renderList(this.next);			
+			}
+		};
+	
+		$(function() {
+			var app = new EventsList(null, {
+				api: "{:U('addon/Hospital/Hospital/listOrder')}",
+				params: {
+					pagesize: 15,
+					start: 0
+				}
+			});
+			app.init();
+		});
+		
+  })(window.jQuery);
+  
+	
+  function showdetail(id,order_id){
+	 var $list = $('#item-box');
+	 
+	 var data = _list['o_'+id];
+	 	 
+	 this.compiler = Handlebars.compile($('#tpi-item-obj').html());
+	 var htm = this.compiler(data);
+	 
+	 $list.html(htm);
+	 $("#hospitalorder_id").val(id);
+	 $("#order_id").val(order_id);
+	 $("#tab2").click();
+	 //alert(data.appraise);
+	 $("#demo2 .ratyli").ratyli({
+		 onRated:function(value, init){
+			 if(!init) {
+				 $("#rank").val(value);
+				 if(value==1) {
+					 $("#rank_name").html("1分 很不满意");
+				 }else if(value==2){
+					 $("#rank_name").html("2分 不满意");
+				 }else if(value==3){
+					 $("#rank_name").html("3分 一般");
+				 }else if(value==4){
+					 $("#rank_name").html("4分 满意");
+				 }else if(value==5){
+					 $("#rank_name").html("5分 很满意");
+				 }
+			 }
+		 },
+		 disable: data.appraise?true:false
+	 });
+	 
+	 $("#btnRank").click(function(){
+		 $("#btnRank").attr("disabled","true");
+		 var url = "{:U('addon/Hospital/Hospital/appraiseorder')}";
+		 var rank = $("#rank").val();
+		 var orderId = $("#hospitalorder_id").val();
+		 var appraise_comment = $("#appraise_comment").val();
+		 if(rank<3 && appraise_comment.length<=0) {
+			 comm_alert_e_g("为提供更好的服务，请您填写您的宝贵意见，谢谢！");
+			 return;
+		 } 
+		 
+		 $.post(url, {"hospitalorder_id":orderId, "rank":rank, "appraise_comment":appraise_comment}, function(res){
+			  if(res.errcode==0) {
+				  comm_alert_e_g("感谢您的评价！");
+				  setTimeout("window.location.reload();", 2000);
+			  }else {
+				  comm_alert_e_y(res.errmsg);
+				  $("#btnRank").removeAttr("disabled");
+				  return false;
+			  }
+		  });
+	 });
+	 
+	 $("#unevaluate").click(function(){
+		 $("#btnRank").attr("disabled","true");
+		 var url = "{:U('addon/Hospital/Evaluate/unevaluatelist')}";
+		 var rank = $("#rank").val();
+		 var orderId = $("#hospitalorder_id").val();
+		 var appraise_comment = $("#appraise_comment").val();
+		 if(rank<3 && appraise_comment.length<=0) {
+			 comm_alert_e_g("为提供更好的服务，请您填写您的宝贵意见，谢谢！");
+			 return;
+		 } 
+		 
+		 $.post(url, {"hospitalorder_id":orderId, "rank":rank, "appraise_comment":appraise_comment}, function(res){
+			  if(res.errcode==0) {
+				  comm_alert_e_g("感谢您的评价！");
+				  setTimeout("window.location.reload();", 2000);
+			  }else {
+				  comm_alert_e_y(res.errmsg);
+				  $("#btnRank").removeAttr("disabled");
+				  return false;
+			  }
+		  });
+	 });
+	 
+	 $("#evaluated").click(function(){
+		 $("#btnRank").attr("disabled","true");
+		 var url = "{:U('addon/Hospital/Evaluate/evaluatedlist')}";
+		 var rank = $("#rank").val();
+		 var orderId = $("#hospitalorder_id").val();
+		 var appraise_comment = $("#appraise_comment").val();
+		 if(rank<3 && appraise_comment.length<=0) {
+			 comm_alert_e_g("为提供更好的服务，请您填写您的宝贵意见，谢谢！");
+			 return;
+		 } 
+		 
+		 $.post(url, {"hospitalorder_id":orderId, "rank":rank, "appraise_comment":appraise_comment}, function(res){
+			  if(res.errcode==0) {
+				  comm_alert_e_g("感谢您的评价！");
+				  setTimeout("window.location.reload();", 2000);
+			  }else {
+				  comm_alert_e_y(res.errmsg);
+				  $("#btnRank").removeAttr("disabled");
+				  return false;
+			  }
+		  });
+	 });
+  }
+  //订单确认
+  function confirmOrder(){
+	  $("#btnSubmit").attr("disabled","true");
+	  var orderId = $("#hospitalorder_id").val();
+	  var url = "{:U('addon/Hospital/Hospital/confirmOrder')}";
+	  $.post(url, {"hospitalorder_id":orderId}, function(res){
+		  if(res.errcode==0) {
+			  comm_alert_e_g("订单确认成功！");
+			  setTimeout("window.location.reload();", 2000);
+		  }else {
+			  comm_alert_e_y(res.errmsg);
+			  $("#btnSubmit").removeAttr("disabled");
+			  return false;
+		  }
+	  });
+  }
+  //刷新订单
+  function reloadOrder(){
+	   var orderId = $("#hospitalorder_id").val();
+	   $.post("{:U('addon/Hospital/Hospital/reloadOrderOne')}", {"hospitalorder_id":orderId}, function(res){
+		  if(res.info.order){
+			_list['o_'+orderId] = res.info.order;
+			showdetail(orderId);
+		  }
+	  });
+	    
+  }
+  
+  function goback(){
+	 $("#tab1").click()
+  }
+  
+  function goEvaluate(order_id){
+  	var orderId = $("#order_id").val();
+  	var _url = "{:U('addon/Hospital/Evaluate/evaluatelist/oid/orderId')}";
+  	_url = _url.replace('orderId',orderId);
+  	window.location.href=_url;
+  }
+  
+</script>
+<script src="http://cdn.bootcss.com/hammer.js/2.0.4/hammer.min.js"></script>
+<script>
+	var sw = $(window).width();
+	var sh = $(window).height();
+	var component = document.getElementById("component");
+	var container = $("#container");
+	var target = $('#container').get(0);
+	var loger = $("#logger");
+	var lastPosX = 0,lastPosY = 0,posX = 0,posY = 0,moveact = 1,cw = 0,ch = 0;
+	var scroue_u = '';
+	var size = '';
+	var orig_src = {width:sw*0.6,height:sh*0.8};
+	var orig_src_set = function(w,h){
+		orig_src.width = w;
+		orig_src.height = h;
+	}
+
+	var hammertime = new Hammer(component);
+	
+	hammertime.add(new Hammer.Pinch());
+	hammertime.on("pinchstart pinchmove pinchend", function (e) {
+		switch (e.type) {
+			case 'pinchstart':
+				moveact = 2;
+				break;
+			case 'pinchmove':
+				if(moveact == 2){
+					var width = Math.floor(orig_src.width*e.scale);
+					var height = Math.floor(orig_src.height*e.scale);
+					cw = width;
+					ch = height;
+					posX = lastPosX - (width-orig_src.width)/2;
+					posY = lastPosY - (height-orig_src.height)/2;
+					container.css('width',width+'px');
+					container.css('height',height+'px');
+				}
+				break;
+			case 'pinchend':
+				orig_src_set(cw,ch);
+				lastPosX = posX;
+				lastPosY = posY;
+				moveact = 1;
+				break;
+		}
+		actransform();
+	});
+	hammertime.on("pan panend", function(e){
+		if(moveact == 1){
+			switch (e.type) {
+				case 'pan':
+					posX = e.deltaX + lastPosX;
+					posY = e.deltaY + lastPosY;
+					break;
+				case 'panend':
+					lastPosX = posX;
+					lastPosY = posY;
+					break;
+			}
+			actransform();
+		}
+	});
+	//移动
+	var actransform = function(){
+		var transform = "translate(" + posX + "px," + posY + "px)";
+		target.style.transform = transform;
+		target.style.oTransform = transform;
+		target.style.msTransform = transform;
+		target.style.mozTransform = transform;
+		target.style.webkitTransform = transform;
+	}
+	//缩放
+	var acresize = function() {	
+		size = '/thumbnail/'+orig_src.width+'x';
+		var u = scroue_u+'?imageMogr2'+size+'/format/jpg';
+		container.attr('src',u);
+	};
+	var reloadimg = function(){
+		lastPosX = 0,lastPosY = 0,posX = 0,posY = 0;		
+		actransform();
+		container.css('width',orig_src.width+'px');
+		container.css('height',orig_src.height+'px');
+	}
+	
+	var cur_view;
+	function showimg(obj){
+		cur_view = obj
+		var url = $(obj).attr("src");
+		$(".img-box img").attr("src",url);
+		
+		scroue_u = url;
+		var img = new Image;
+		img.crossOrigin = 'Anonymous';
+		img.onload = function(){
+			var ih = sw*0.6*img.height/img.width;
+			orig_src_set(sw*0.6,ih);
+			reloadimg();
+		};
+		img.src = url;
+		
+		$(".am-icon-close").show();
+		$(".img-box").show();
+		$(obj).addClass("cur");			
+	}
+	function showclose(){
+		$(".img-box").hide();
+		$(".am-icon-close").hide();
+		$(cur_view).removeClass("cur");	
+	}
+</script>
+<script src="{:ADDON_PUBLIC_PATH}/js/jquery.ratyli.js"></script>
+</body>
+</html>

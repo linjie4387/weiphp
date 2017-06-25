@@ -1,0 +1,309 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>仪器查询</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="仪器查询">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-50 { width:50%;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.search-box { position:relative;}
+		.search-box input { padding-right:50px !important;padding-left:30px !important;}
+		.search-box button { position:absolute;right:0;bottom:0;border: 1px solid #CCCCCC;}
+		.search-box i { position:absolute;left:0;bottom:0;}
+		
+		.btn-select { color: #555;background-color: #FFFFFF;border: 1px solid #D2D2D2;text-align: left;}
+		
+		.hos-list { }
+		
+		.search-tab li a { text-align:center;margin:0;color: #FFF !important; background-color: #ADADAD !important;border-top-left-radius: 5px;border-top-right-radius: 5px;}
+		.search-tab .am-active a { background-color: #739DF3 !important;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<section class="am-padding-xs bg-f">
+    
+        <fieldset class="am-margin-0">
+            <legend class="am-margin-0 am-text-lg c-g"><span class="title">仪器查询</span><div id="btn-camera" class="am-icon-camera am-padding-horizontal-xs am-fr"></div></legend>
+            
+            <div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+                <ul class="am-tabs-nav am-nav am-nav-tabs search-tab">
+                	<if condition="$type eq 1">
+                    <li class="w-50 am-active" data="1"><a class="am-text-sm" href="javascript: void(0)">按仪器号查询</a></li>
+                    <else />
+                    <li class="w-50" data="1"><a class="am-text-sm" href="javascript: void(0)">按仪器号查询</a></li>
+                    </if>
+                    <if condition="$type eq 2">
+                    <li class="w-50 am-active" data="2"><a class="am-text-sm" href="javascript: void(0)">按医院查询</a></li>
+                    <else />
+                    <li class="w-50" data="2"><a class="am-text-sm" href="javascript: void(0)">按医院查询</a></li>
+                    </if>
+                </ul>
+                <div class="am-tabs-bd">
+                	<if condition="$type eq 1">
+					<div class="am-tab-panel am-active">
+                    <else />
+                    <div class="am-tab-panel">
+                    </if>
+                    <form action="{:U('addon/Hospital/Device/list_device')}" onSubmit="return check();" method="POST" class="am-form">
+                    	<input type="hidden" name="type" value="1" />
+                        <div class="am-form-group search-box">
+                            <label for="user_name">仪器序号查询</label>
+                            <i class="am-btn am-padding-horizontal-xs am-icon-search"></i>
+                            <input type="text" id="search_dev" name="serial_code" value="{$serial_code}" placeholder="输入仪器序号" class="am-form-field"/>
+                        </div>
+                        <div class="am-text-center"><button type="submit" class="am-btn am-btn-warning w-80">搜 索</button></div>
+                    </form>
+                    </div>
+                    <if condition="$type eq 2">
+                    <div class="am-tab-panel am-active">
+                    <else />
+                    <div class="am-tab-panel">
+                    </if>
+                    <form action="{:U('addon/Hospital/Device/list_device')}" onSubmit="return check();" method="POST" class="am-form">
+                    	<input type="hidden" name="type" value="2" />
+                        <div class="am-form-group search-box">
+                            <label for="user_name">医院关键字查询</label>
+                            <input type="text" id="search_hos" name="key_hos" value="{$key_hos}" placeholder="输入关键字搜索医院" class="am-form-field"/>
+                            <button type="button" onClick="hossearch();" class="am-btn am-btn-warning am-icon-search"></button>
+                        </div>
+                        <empty name="hospital_id">
+                        <div class="am-g am-g-collapse hos-list">
+                        <else />
+                        <div class="am-g am-g-collapse">
+                        </empty>
+                            <div class="am-u-sm-12">
+                                <div class="am-form-group am-u-sm-6">
+                                    <label for="hos_select">医院：</label>
+                                    <select id="hos_select" name="hospital_id" onChange="choose_hos(this);">
+                                        <option value="">-= 选择医院 =-</option>
+                                        <volist name="hospitallist" id="vo">
+                                            <eq name="vo.hospital_id" value="$hospital_id">
+                                                <option value="{$vo.hospital_id}" selected>{$vo.name}</option>
+                                            <else />
+                                                <option value="{$vo.hospital_id}">{$vo.name}</option>
+                                            </eq>
+                                        </volist>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                                <div class="am-form-group am-u-sm-6">
+                                    <label for="offi_select">科室：</label>
+                                    <select id="offi_select" name="office_id">
+                                        <option value="">-= 选择科室 =-</option>
+                                        <volist name="officelist" id="vo">
+                                            <eq name="vo.office_id" value="$office_id">
+                                                <option value="{$vo.office_id}" selected>{$vo.name}</option>
+                                            <else />
+                                                <option value="{$vo.office_id}">{$vo.name}</option>
+                                            </eq>
+                                        </volist>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                            </div>
+                        </div>                        
+                    	<div class="am-text-center"><button type="submit" class="am-btn am-btn-warning w-80">搜 索</button></div>
+                    </form>
+                    </div>
+                </div>
+        </fieldset>
+    
+    </form>
+    <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+    <ul id="item-list" class="am-g am-g-collapse am-padding-horizontal-sm">
+    	<volist name="devicelist" id="vo">
+    	<a href="{:U('addon/Hospital/Device/device_detail')}&device_id={$vo.device_id}">
+	    <li class="am-u-sm-12">
+			<div class="am-u-sm-11">
+				<div class="am-u-sm-12 am-text-lg f-w-6">{$vo.serial_code}</div>
+				<div class="am-u-sm-12 am-text-sm c-g">仪器型号:{$vo.model_name}<span style="padding-left:20px;">保养周期:{$vo.service_period}</span></div>
+			</div>
+			<div class="am-u-sm-1 am-text-right">
+				<div class="am-icon-chevron-right am-margin-top-sm"></div>
+			</div>
+			<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+	    </li>
+    	</volist>
+    </ul>
+    <div class="blank-1"></div>
+</section>
+
+<script src="http://cdn.staticfile.org/handlebars.js/4.0.5/handlebars.min.js" type="text/javascript"></script>
+<script type="text/x-handlebars-template" id="tpi-list-item">
+	{{#each this}}
+	<a href="{:U('addon/Hospital/Device/device_detail')}&device_id={{device_id}}">
+	<li class="am-u-sm-12">
+		<div class="am-u-sm-11">
+			<div class="am-u-sm-12 am-text-lg f-w-6">{{serial_code}}</div>
+			<div class="am-u-sm-12 am-text-sm c-g">仪器型号:{{model_name}}    保养周期:{{service_period}}</div>
+		</div>
+		<div class="am-u-sm-1 am-text-right">
+			<div class="am-icon-chevron-right am-margin-top-sm"></div>
+		</div>
+		<hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+    </li>
+	</a>
+	{{/each}}
+</script>
+<script>
+	var _offices = {};
+	var is_ajax = false;
+	var $list = $('#item-list');
+	
+	function check(){
+		var cur_tab = $(".search-tab .am-active").attr("data");
+		var param = {};
+		var has_param = false;
+		var key_dev = $("#search_dev").val();
+		var key_hos = $("#hos_select").val();
+		var key_ofc = $("#offi_select").val();
+		if(key_dev!='' && cur_tab == 1){
+			param['serial_code'] = key_dev;
+			has_param = true;
+		}
+		if(key_hos!='' && cur_tab == 2){
+			param['hospital_id'] = key_hos;
+			has_param = true;
+		}
+		if(key_ofc!='' && cur_tab == 2){
+			param['office_id'] = key_ofc;
+			has_param = true;
+		}
+		
+		if(!has_param){
+			comm_alert_e_y("请添加搜索条件");
+			return false;	
+		}
+		return true;
+	}
+  	function dosearch(){
+		if(is_ajax){
+			return;	
+		}
+		var cur_tab = $(".search-tab .am-active").attr("data");
+		var param = {};
+		var has_param = false;
+		var key_dev = $("#search_dev").val();
+		var key_hos = $("#hos_select").val();
+		var key_ofc = $("#offi_select").val();
+		if(key_dev!='' && cur_tab == 1){
+			param['serial_code'] = key_dev;
+			has_param = true;
+		}
+		if(key_hos!='' && cur_tab == 2){
+			param['hospital_id'] = key_hos;
+			has_param = true;
+		}
+		if(key_ofc!='' && cur_tab == 2){
+			param['office_id'] = key_ofc;
+			has_param = true;
+		}
+		
+		if(!has_param){
+			comm_alert_e_y("请添加搜索条件");
+			return;	
+		}
+		is_ajax = true;
+		
+		$.post("{:U('addon/Hospital/Device/ajax_list_device')}",param,function(data) {
+			console.log(data);
+			if(data.status == 0){
+				comm_alert_e_y(data.info);	
+			}else{
+				var info = data.info;
+				this.compiler = Handlebars.compile($('#tpi-list-item').html());
+				var htm = this.compiler(info);
+				$list.html(htm);
+			}
+			is_ajax = false;				
+		});
+	}
+	
+	function hossearch(){
+		var hos_key = $("#search_hos").val();
+		if(hos_key == ''){
+			 comm_alert_e_y("请输入医院关键字");
+			 return;
+		}
+		$.post("{:U('addon/Hospital/Device/listhospital')}",{ key:hos_key },function(data) {
+			if(data.status == 0){
+				comm_alert_e_y(data.info);	
+			}else{
+				var info = data.info;
+				var htm = '<option value="">-= 选择医院 =-</option>';
+				for(var i=0;i<info.length;i++)	{
+					htm = htm + '<option value="'+info[i].hospital_id+'">'+info[i].name+'</option>';
+					_offices['of_'+info[i].hospital_id] = info[i].office;
+				}
+				$("#hos_select").html(htm);
+				$(".hos-list").show();
+			}
+		});
+	}
+	function choose_hos(obj){
+		var sid = $(obj).val();
+		var office = _offices['of_'+sid];
+		var htm = '<option value="">-= 选择科室 =-</option>';
+		for(var i=0;i<office.length;i++)	{
+			htm = htm + '<option value="'+office[i].office_id+'">'+office[i].name+'</option>';
+		}
+		$("#offi_select").html(htm);
+	}
+</script>
+<script type='text/javascript' src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' ></script>
+<script>
+	$(function(){
+		wx.config({
+			debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			appId: '{$jsapiParams.appId}', // 必填，公众号的唯一标识
+			timestamp: '{$jsapiParams.timestamp}', // 必填，生成签名的时间戳
+			nonceStr: '{$jsapiParams.nonceStr}', // 必填，生成签名的随机串
+			signature: '{$jsapiParams.signature}',// 必填，签名，见附录1
+			jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','scanQRCode','chooseImage','uploadImage','chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+		});
+		wx.ready(function(){
+			$("#btn-camera").on('click',function(){
+				wx.scanQRCode({
+					needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+					scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+					success: function (res) {
+						var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+						//alert(JSON.stringify(res));
+						window.location.href = "{:U('addon/Hospital/Device/device_detail')}&code="+result;
+					}
+				});
+			});	
+		});
+		wx.error(function(res){
+			comm_alert_e_y("FAIL(wx)！");
+		});
+	});	
+</script>
+</body>
+</html>

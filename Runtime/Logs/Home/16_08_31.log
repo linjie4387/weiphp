@@ -1,0 +1,208 @@
+[ 2016-08-31T15:36:27+08:00 ] 127.0.0.1 /index.php?s=/addon/Wecome/Wecome/config.html&mdm=45
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000045s ]
+SQL: SHOW COLUMNS FROM `wp_hooks` [ RunTime:0.4497s ]
+SQL: SELECT `name`,`addons` FROM `wp_hooks`  [ RunTime:0.0331s ]
+SQL: SHOW COLUMNS FROM `wp_addons` [ RunTime:0.0779s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('ReturnTop')  [ RunTime:0.1143s ]
+SQL: SHOW COLUMNS FROM `wp_plugin` [ RunTime:0.0474s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('ReturnTop')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('SocialComment')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('SocialComment')  [ RunTime:0.0238s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('Editor')  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('Editor')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('EditorForAdmin')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('EditorForAdmin')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('SiteStat','SystemInfo','DevTeam')  [ RunTime:0.0400s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('SiteStat','SystemInfo','DevTeam')  [ RunTime:0.0007s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('Editor')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('Editor')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('Hitegg','Diy','RedBag','WeMedia','ShopCoupon','Card','SingIn','Seckill','CustomMenu','CustomReply','AutoReply','WeiSite','UserCenter','Exam','Draw','Extensions','Forms','Coupon','Guess','Comment','Game','ConfigureAccount','Chat','CardVouchers','Ask','BusinessCard','HelloWorld','Invite','Tongji','Test','Vote','Sms','Survey','Shop','Wecome','WishCard','Scratch','Robot','YouaskService','RealPrize','Xydzp','Reserve','PublicBind','Payment','Leaflets','NoAnswer','CustomerService','Hospital')  [ RunTime:0.0231s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('Hitegg','Diy','RedBag','WeMedia','ShopCoupon','Card','SingIn','Seckill','CustomMenu','CustomReply','AutoReply','WeiSite','UserCenter','Exam','Draw','Extensions','Forms','Coupon','Guess','Comment','Game','ConfigureAccount','Chat','CardVouchers','Ask','BusinessCard','HelloWorld','Invite','Tongji','Test','Vote','Sms','Survey','Shop','Wecome','WishCard','Scratch','Robot','YouaskService','RealPrize','Xydzp','Reserve','PublicBind','Payment','Leaflets','NoAnswer','CustomerService','Hospital')  [ RunTime:0.0007s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('Cascade')  [ RunTime:0.0005s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('Cascade')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('Diy')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('Diy')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('DynamicSelect')  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('DynamicSelect')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_addons` WHERE `status` = 1 AND `name` IN ('News')  [ RunTime:0.0003s ]
+SQL: SELECT `id`,`name` FROM `wp_plugin` WHERE `status` = 1 AND `name` IN ('News')  [ RunTime:0.0003s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:2.329684s ]
+INFO: [ app_init ] --END-- [ RunTime:2.564612s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.026243s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.026387s ]
+SQL: SHOW COLUMNS FROM `wp_config` [ RunTime:0.0765s ]
+SQL: SELECT `type`,`name`,`value` FROM `wp_config` WHERE `status` = 1  [ RunTime:0.0417s ]
+SQL: SELECT `value` FROM `wp_config` WHERE ( name="FOLLOW_YOUKE_UID" ) LIMIT 1   [ RunTime:0.0008s ]
+SQL: UPDATE `wp_config` SET `value`='-12038' WHERE ( name="FOLLOW_YOUKE_UID" ) [ RunTime:0.1548s ]
+SQL: SHOW COLUMNS FROM `wp_user` [ RunTime:0.0646s ]
+NOTIC: [8] Undefined index: uid /Users/mac/eclipse_php/weiphp/ThinkPHP/Library/Think/Controller.class.php 第 506 行.
+SQL: SHOW COLUMNS FROM `wp_auth_group_access` [ RunTime:0.1586s ]
+SQL: SELECT a.uid,a.group_id,g.title,g.rules FROM wp_auth_group_access a INNER JOIN wp_auth_group g on a.group_id=g.id  WHERE ( a.uid='-12038' and g.status='1' )  [ RunTime:0.0919s ]
+SQL: SHOW COLUMNS FROM `wp_manager_menu` [ RunTime:0.0702s ]
+SQL: SELECT * FROM `wp_addons` WHERE `status` = 1  [ RunTime:0.0012s ]
+SQL: SHOW COLUMNS FROM `wp_addons` [ RunTime:0.0019s ]
+SQL: SHOW COLUMNS FROM `wp_public` [ RunTime:0.0783s ]
+SQL: SELECT `id`,`token` FROM `wp_public`  [ RunTime:0.0068s ]
+NOTIC: [8] Undefined offset: -1 /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 38 行.
+NOTIC: [8] Undefined index: addon_status /Users/mac/eclipse_php/weiphp/Application/Common/Model/AddonStatusModel.class.php 第 47 行.
+NOTIC: [8] Undefined index: group_id /Users/mac/eclipse_php/weiphp/Application/Common/Model/AddonStatusModel.class.php 第 50 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+SQL: SELECT * FROM `wp_manager_menu` WHERE `uid` = 0 AND `is_hide` = 0 ORDER BY sort asc, id asc  [ RunTime:0.0577s ]
+SQL: SELECT * FROM `wp_manager_menu` WHERE `uid` = 1 AND `is_hide` = 0 ORDER BY sort asc, id asc  [ RunTime:0.0009s ]
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined offset: 14 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 94 行.
+NOTIC: [8] Undefined offset: 14 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 104 行.
+NOTIC: [8] Undefined offset: 60 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 94 行.
+NOTIC: [8] Undefined offset: 60 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 104 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined index: HTTP_REFERER /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 127 行.
+NOTIC: [8] Undefined offset: 1 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 131 行.
+SQL: SHOW COLUMNS FROM `wp_public_link` [ RunTime:0.0521s ]
+SQL: SELECT * FROM `wp_public_link` WHERE `uid` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Invalid argument supplied for foreach() /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 46 行.
+NOTIC: [8] Undefined variable: res /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 50 行.
+
+[ 2016-08-31T15:36:58+08:00 ] 127.0.0.1 /index.php?s=/addon/Wecome/Wecome/config.html&mdm=45
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.001122s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001555s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000351s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000429s ]
+SQL: SELECT `value` FROM `wp_config` WHERE ( name="FOLLOW_YOUKE_UID" ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: UPDATE `wp_config` SET `value`='-12039' WHERE ( name="FOLLOW_YOUKE_UID" ) [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: uid /Users/mac/eclipse_php/weiphp/ThinkPHP/Library/Think/Controller.class.php 第 506 行.
+SQL: SHOW COLUMNS FROM `wp_auth_group_access` [ RunTime:0.0014s ]
+SQL: SELECT a.uid,a.group_id,g.title,g.rules FROM wp_auth_group_access a INNER JOIN wp_auth_group g on a.group_id=g.id  WHERE ( a.uid='-12039' and g.status='1' )  [ RunTime:0.0004s ]
+SQL: SELECT `id`,`token` FROM `wp_public`  [ RunTime:0.0004s ]
+NOTIC: [8] Undefined offset: -1 /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 38 行.
+NOTIC: [8] Undefined index: addon_status /Users/mac/eclipse_php/weiphp/Application/Common/Model/AddonStatusModel.class.php 第 47 行.
+NOTIC: [8] Undefined index: group_id /Users/mac/eclipse_php/weiphp/Application/Common/Model/AddonStatusModel.class.php 第 50 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+SQL: SELECT * FROM `wp_manager_menu` WHERE `uid` = 0 AND `is_hide` = 0 ORDER BY sort asc, id asc  [ RunTime:0.0005s ]
+SQL: SELECT * FROM `wp_manager_menu` WHERE `uid` = 1 AND `is_hide` = 0 ORDER BY sort asc, id asc  [ RunTime:0.0007s ]
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined offset: 14 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 94 行.
+NOTIC: [8] Undefined offset: 14 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 104 行.
+NOTIC: [8] Undefined offset: 60 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 94 行.
+NOTIC: [8] Undefined offset: 60 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 104 行.
+NOTIC: [8] Undefined variable: addons /Users/mac/eclipse_php/weiphp/Application/Common/Common/function.php 第 501 行.
+NOTIC: [8] Undefined index: HTTP_REFERER /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 127 行.
+NOTIC: [8] Undefined offset: 1 /Users/mac/eclipse_php/weiphp/Application/Common/Model/ManagerMenuModel.class.php 第 131 行.
+SQL: SELECT * FROM `wp_public_link` WHERE `uid` = 0  [ RunTime:0.0004s ]
+NOTIC: [2] Invalid argument supplied for foreach() /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 46 行.
+NOTIC: [8] Undefined variable: res /Users/mac/eclipse_php/weiphp/Application/Common/Model/PublicModel.class.php 第 50 行.
+

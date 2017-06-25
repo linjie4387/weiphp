@@ -1,0 +1,150 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>用户注册</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="用户注册">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.search-box { position:relative;}
+		.search-box input { padding-right:50px !important;}
+		.search-box button { position:absolute;right:0;bottom:0;}
+		
+		.hos-box-sel { display:none;}
+		.btn-select { color: #555;background-color: #FFFFFF;border: 1px solid #D2D2D2;text-align: left;}
+		
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<div id="op_loadbox"><span class="am-icon-spinner am-icon-spin"></span><span class="msg">加载中...</span></div>
+<section class="am-padding-xs bg-f">
+    <form action="{:U('addon/Hospital/Hospital/join')}" method="post" class="am-form" onSubmit="return check();">
+        <div class="am-tabs" data-am-tabs="{noSwipe: 1}" id="doc-tab-demo-1">
+        	 <ul class="am-hide am-tabs-nav am-nav am-nav-tabs">
+                <li class="am-active"><a id="tab1" href="javascript: void(0)"></a></li>
+                <li><a id="tab2" href="javascript: void(0)"></a></li>
+                <li><a id="tab3" href="javascript: void(0)"></a></li>
+              </ul>
+            <div class="am-tabs-bd border-n">
+                <div class="am-tab-panel am-padding-0 am-active">
+               	<fieldset>
+                    <legend class="am-margin-0 am-text-lg c-g"><span class="title">填写注册资料</span></legend>
+                    <input type="hidden" id="type" name="type" value="{$user_type}" />
+                    <div class="am-form-group">
+                        <label for="user_name">姓名</label>
+                        <input type="text" id="user_name" name="name" minlength="1" placeholder="输入姓名" class="am-form-field" required/>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="user_phone">手机号码</label>
+                        <input type="text" id="user_phone" name="mobile" minlength="5" placeholder="输入手机号" class="am-form-field" required/>
+                    </div>
+                    <div class="am-form-group">
+                    	<label for="verify_code">验证码</label>
+                    	<div class="am-g">
+                    		<div class="am-u-sm-7 am-padding-left-0">
+	                        	<input type="text" id="verify_code" name="verify_code" maxlength="6" placeholder="输入验证码" class="am-form-field" required/>
+	                    	</div>
+	                    	<div class="am-u-sm-5">
+		                    	<a href="javascript:sendMsg();" id="freeCode" class="am-btn am-btn-primary">免费获取</a>
+		                    	<span class="code_span1" id="codespan" style="display: none;">验证码发送中</span>
+		                    </div>
+	                    </div>
+                    </div>
+                    
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-success w-80" type="submit">提交</button>
+                    </div>
+                </fieldset>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+		var $tab = $('#doc-tab-demo-1');
+		
+		function check(){
+			if($("#user_name").val() == ''){
+				comm_alert_e_y("请输入姓名");	
+				return false;
+			}
+			if($("#user_phone").val() == ''){
+				comm_alert_e_y("请输入电话");	
+				return false;
+			}
+			show_load('处理中...');
+			return true;
+		}
+		
+		var isSendMsg=false;
+		var count = function(btn, count, i) {
+			if(i > 0) {
+				i--;
+				$(count).text( i + "秒");
+				setTimeout("count('" + btn + "', '" + count + "', " + i + ")", 1000);
+			} else {
+				$(count).remove();
+		    	$(btn).show(); 
+		    	isSendMsg=false;    	
+			}
+		};
+		//发送短信验证码
+		function sendMsg(){
+			isSendMsg=false;
+			var mobile = $("#user_phone").val();
+			if(mobile==''){
+				 comm_alert_y("手机号码不能为空！");
+				 return false;
+			}else{
+				var reg = /^[0-9]{11}$/g;
+				if(!reg.test(mobile)){
+					comm_alert_y("请输入正确手机号码！");
+					return false;
+				}
+			}
+			$("#freeCode").hide();
+		    $("#codespan").show();
+		   
+		    $.post("{:addons_url('Hospital://Hospital/send_sms')}",
+		    		{"mobile":mobile},
+		    		function(data){
+		    			if(data.errcode=="0"){
+							$("#codespan").hide();
+							isSendMsg=true;
+							var o = $("#freeCode");
+							o.hide();
+							o.after($("<span>", {"class": "code_span"}));
+							count("#freeCode", ".code_span", 60);		    	
+					    }else{
+					    	$("#codespan").hide();
+					    	$("#freeCode").show();		        
+						}
+				  },'json');
+		}
+	</script>
+</section>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>我要接单 - 订单详情</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="我要接单 - 订单详情">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;min-height:100vh;}
+		ul,li { list-style:none;}
+		hr { border-top: 1px solid #ccc;}
+		.c-g { color:#969696;}
+		.c-c { color:#5EB95E;}
+		.c-l { color:#5EB95E;}
+		.w-70 { width:70%;}
+		.w-80 { width:80%;}
+		.w-90 { width:90%;}
+		.w-100 { width:100%;}
+		.bg-f { background-color:#FFFFFF;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.p-horizontal-15 { padding:0 15px !important;}
+		.margin-auto { margin:auto;}
+		
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		.border-g-ts { border-top:1px solid #ccc;}
+		.border-g-bs { border-bottom:1px dashed #ccc;}
+		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.blank-title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.goods-list li { position:relative;}
+		.goods-list li .content-number { position: absolute;height: 100%;width: 20%;right: 10%;top:0;}
+		.goods-list li .content-more { position: absolute;height: 100%;width: 10%;right: 0;top:0;}
+		.goods-list li .off { display:none;}
+		
+		.bg{
+			width:100%;
+			height:110px;
+			background:#E66629;
+			                 
+		}
+		.bg-jc {
+			border-top: 2px solid #5C2409;
+			background-image:-webkit-gradient(linear,50% 0,0 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#E66629),
+												to(#E66629)    
+							),
+							-webkit-gradient(linear,50% 0,100% 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#E66629),
+												to(#E66629)                                            
+							);
+			background-image:-moz-linear-gradient(50% 0 -45deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							),-moz-linear-gradient(50% 0 -135deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							);                                
+			background-size:13px 6px;
+			background-repeat:repeat-x;
+			background-position:0 100%;   	
+		}
+		
+		.ribbon-wrapper{
+		  width: 80px;
+		  height: 88px;
+		  position: absolute;
+		  top: -3px;
+		  right: 0;
+		  overflow: hidden;
+		}
+		.ribbon{
+		  text-align: center;
+		  color: #fff;
+		  font-weight: 500;
+		  padding: 7px 0;
+		  width: 120px;
+		  background-color: #0E90D2;
+		  background-image: -webkit-linear-gradient(top, #0E90D2, #0D83BF);/*这里可以根据需要把所有的厂商前缀都加上*/
+		  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), inset 1px 1px 0px rgba(255, 255, 255, .1);
+		  font-size: 16px;
+		  transform: rotate(45deg); 
+		  position: relative;
+		  top: 12px; /*这个值可以根据需要来调整*/
+		  left: -3px;
+		}
+		
+		.search-box { position:relative;}
+		.search-box .key { width:80%;outline:none;border-radius: 0 !important;border: 1px solid #F37B1D;}
+		.search-box .btn { position:absolute;height:100%;width:18%;left:78%;}
+		.am-tabs-bd { border:none;}
+		
+		.shop-list {padding-bottom: 60px;}
+		.shop-list li { border-bottom:1px dashed #CCC;}
+		.shop-list li i { display:none;}
+		.shop-list .on i { display:block !important;}
+		
+		.btn-comfirm { position:fixed;bottom:0;width:100%;display:none;background-color: #FFFFFF;z-index:100;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg">
+     <div class="am-padding-vertical-sm am-text-sm w-80 bg-f margin-auto bg-jc">单号：{$trade.tid}<br />
+        <span class="am-text-xl" style="color: #E66629;">￥{$trade.payment}</span></div>
+</fieldset>
+<if condition="($trade.feedback eq 1) or ($trade.feedback eq 101)">
+    <div class="ribbon-wrapper">
+        <div class="ribbon">维权中</div>
+    </div>
+</if>
+<div class="w-100 am-margin-bottom-sm"></div>
+<div id="page_tab" data-am-widget="tabs" data-am-tabs-noswipe="1" class="am-margin-0 am-tabs am-tabs-default">
+    <ul class="am-tabs-nav am-nav am-nav-tabs am-hide">
+        <li class="am-active"><a href="javascript: void(0)">tab1</a></li>
+        <li><a href="javascript: void(0)">tab2</a></li>
+    </ul>
+    <div class="am-tabs-bd">
+    	<div data-tab-panel-0 class="am-tab-panel am-padding-0 am-active">
+        <section id="item-box">
+            <div class="am-padding-xs am-text-sm blank-title"><i class="am-icon-building-o am-text-lg"></i>&nbsp;&nbsp;订单信息</div>
+            <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f am-margin-bottom-sm">
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">姓名：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.receiver_name}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">微信昵称：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.buyer_nick}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">电话：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.receiver_mobile}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">地址：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.receiver_state} {$trade.receiver_city} {$trade.receiver_district} {$trade.receiver_address}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">买家留言：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.buyer_message}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">卖家备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.trade_memo}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">下单时间：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.created}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">预约送货时间：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.send_time}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">配送费：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.post_fee}元</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$trade.remark}</div>
+                    <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                </li>
+            </ul>
+            <div class="am-padding-xs am-text-sm blank-title"><i class="am-icon-cubes am-text-lg"></i>&nbsp;&nbsp;商品信息</div>
+            <ul class="goods-list am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f">
+                <volist name="productlist" id="vo">
+                <li class="am-u-sm-12 am-margin-vertical-sm">
+                    <div class="am-u-sm-12 goods-item-btn">
+                        <div class="am-u-sm-2"><img class="w-90" src="{$vo.pic_thumb_path}"></div>
+                        <div class="am-u-sm-6 am-text-sm am-text-left">{$vo.title}<div class="c-g">{$vo.payment}元</div></div>
+                        <div class="am-text-sm am-text-center c-g content-number am-vertical-align"><div class="am-vertical-align-middle">x{$vo.num}份</div></div>
+                        <div class="am-text-sm am-text-center c-g content-more am-vertical-align"><div class="am-vertical-align-middle"><i class="am-icon-chevron-down"></i></div></div>
+                    </div>
+                    <div class="am-u-sm-12 am-margin-top-xs goods-item-remrak off">      	
+                        <div class="am-u-sm-2">&nbsp;</div>
+                        <div class="am-u-sm-10">
+                            <if condition="vo['messagelist'] neq null">
+                            <volist name="vo['messagelist']" id="msg">
+                            <div class="am-u-sm-12 am-text-sm f-w-6"><i style="color: #B95E5E;" class="am-icon-comment"></i>{$msg.title}</div>
+                            <div class="am-u-sm-12 am-text-xs p-horizontal-15 border-g-bs">{$msg.content}</div>        
+                            </volist>            
+                            <else />
+                            <div class="am-u-sm-12 am-text-xs p-horizontal-15 border-g-bs">暂无留言</div>                    
+                            </if>
+                        </div>
+                    </div>
+                </li>
+                <hr data-am-widget="divider" style="" class="am-divider am-divider-solid am-margin-0" />
+                </volist>
+            </ul>
+            <div class="am-padding-vertical-sm am-text-center">
+                <if condition="$trade.is_dispatch neq 1">
+                <a href="javascript:doshop();" class="am-btn am-btn-warning am-text-sm w-90 border-r-5">接 单</a>
+                </if>
+            </div>
+        </section>
+    	</div>
+        <div data-tab-panel-1 class="am-tab-panel am-padding-0">
+        <section style="min-height: 80vh;">
+        	<div class="am-margin-0 am-padding-horizontal-sm search-box am-hide">
+                <input type="text" id="keyword" name="key" value="" placeholder="请输入门店名称" class="am-padding-xs key" required/>                
+                <a href="javascript:dosearch();" class="btn am-btn am-btn-warning am-text-sm"><i class="am-icon-search"></i></a>
+            </div>
+        	<ul class="am-padding-horizontal-sm shop-list">
+            	<volist name="shoplist" id="shop">
+            	<li id="{$shop.shop_id}" class="am-padding-vertical-sm"><span class="sname">{$shop.shop_name}</span><i class="am-icon-check am-margin-right-sm am-fr c-c"></i></li>
+                </volist>
+            </ul>
+        </section>
+        </div>
+    </div>
+</div>
+<div class="am-padding-vertical-sm am-text-center btn-comfirm">
+	<div class="am-g am-g-collapse">
+    <div class="am-u-sm-6 am-text-center">
+    <a href="javascript:doget();" class="am-btn am-btn-warning am-text-sm w-90 border-r-5">确认接单</a>
+    </div>
+    <div class="am-u-sm-6 am-text-center">
+    <a href="javascript:docancel();" class="am-btn am-btn-default am-text-sm w-90 border-r-5">取 消</a>
+    </div>
+</div>
+<script>
+	$(function(){
+		$(".goods-item-btn").on("click",function(){
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+				$(this).parent().find(".goods-item-remrak").hide();
+			}else{
+				$(this).addClass("active");
+				$(this).parent().find(".goods-item-remrak").show();
+			}
+		});
+		$(".shop-list li").on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+		});
+	});
+	
+	function doget(){
+		var url = "{:U('addon/OrderShip/OrderShip/claimorder')}&tid={$trade.tid}";
+		if($(".shop-list .on").length>0){
+			var shopid = $(".shop-list .on").attr("id");
+			url = url + "&shop_id="+shopid;	
+			window.location.href = url;
+		}else{
+			comm_alert_y("请选择门店");	
+		}
+		//console.log(url);
+	}
+	function doshop(){
+		$("#page_tab").tabs('open', 1);
+		$(".btn-comfirm").show();
+	}
+	function docancel(){
+		$(".btn-comfirm").hide();
+		$("#page_tab").tabs('open', 0);
+	}
+	function dosearch(){
+		var k = $("#keyword").val();
+		$(".shop-list li").removeClass("on");
+		if(k == "" || k.length == 0){
+			$(".shop-list li").removeClass("am-hide");
+		}else{
+			$(".shop-list li").addClass("am-hide");
+			$(".shop-list li:contains("+k+")").removeClass("am-hide");
+		}
+	}
+</script>
+</body>
+</html>

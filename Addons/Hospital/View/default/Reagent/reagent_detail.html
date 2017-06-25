@@ -1,0 +1,140 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>试剂信息</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="试剂信息">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;min-height:auto;}
+		ul,li { list-style:none;}
+		.c-g { color:#D86833;}
+		.c-l { color:#5EB95E;}
+		.bg-f { background-color:#ffffff;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.blank-1 { width:100%;height:1em;}
+		
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.blank-title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.bg{
+			width:100%;
+			height:20px;
+			background:#E66629;
+			background-image:-webkit-gradient(linear,50% 0,0 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)    
+							),
+							-webkit-gradient(linear,50% 0,100% 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)                                            
+							);
+			background-image:-moz-linear-gradient(50% 0 -45deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							),-moz-linear-gradient(50% 0 -135deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							);                                
+			background-size:13px 6px;
+			background-repeat:repeat-x;
+			background-position:0 100%;                    
+		}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg"></fieldset>
+<div class="blank-1"></div>
+<section id="item-box">
+	<div class="am-padding-xs am-text-sm blank-title"><i class="am-icon-building-o am-text-lg"></i>&nbsp;&nbsp;试剂信息</div>
+    <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f am-margin-bottom-sm">
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">商品编号：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.code}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">商品名称：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.name}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">通用名：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.generate_name}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">单位：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.unit}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">规格：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.specs}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">储藏条件：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.storage_condition}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">注册证号：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.regist_id}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">批准文号有效期至：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.valid_date}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">厂商：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.manufacturer}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-3 am-text-sm am-text-right">适用机型：</div>
+            <div class="am-u-sm-9 am-text-sm c-g">{$data.apply_to}</div>
+            <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        </li>
+    </ul>
+</section>
+</body>
+</html>

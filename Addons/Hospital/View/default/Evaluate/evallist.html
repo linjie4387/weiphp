@@ -1,0 +1,122 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>仪器信息</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="仪器信息">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.am-nav-tabs>li>a { margin:0;}
+		.am-nav-tabs { border-bottom: 1px solid #0E9CDC !important;}
+		.am-nav-tabs>li.am-active>a, .am-nav-tabs>li.am-active>a:focus, .am-nav-tabs>li.am-active>a:hover { color: #FFFFFF !important;background-color: #0e90d2 !important;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<section class="am-padding-xs bg-f">
+	<fieldset class="am-margin-0 am-padding-0">
+            <legend class="am-margin-0 am-text-lg c-g"><span class="title">用户评价</span></legend>
+    </fieldset>
+    <div class="am-tabs" data-am-tabs id="doc-tab-demo-1">
+         <ul class="am-tabs-nav am-nav am-nav-tabs ">
+            <li class="am-active"><a href="[data-tab-panel-1]">待评价</a></li>
+            <li><a href="[data-tab-panel-2]">已评价</a></li>
+          </ul>
+        <div data-tab-panel-1 class="am-tabs-bd border-n">
+            <div class="am-tab-panel am-padding-0 am-active">
+            	<volist name="unevaluate" id="uv">
+	            	<ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+	                    <li class="am-u-sm-12">
+	                        <div class="am-u-sm-12 am-text-sm am-padding-vertical-xs am-margin-bottom-xs div-w-inbox div-w-inbox-1">
+	                            送货单号：{$uv.delivery_id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                            <a href="#" onclick="goEvaluate({$uv.withgoods_id})" style="padding-left:10px; padding-right:10px; padding-bottom:5px; padding-top:5px; background:#093 ; color:#FFF ;border-radius:5px; font-size: 12px;">评价</a>
+	                            <span class="am-badge  am-fr border-r5"></span>
+	                        </div>
+	                        <div class="am-u-sm-12">
+	                            <div class="am-u-sm-12 am-text-sm">
+	                                <div class="am-u-sm-12"></div>
+	                                <div class="am-u-sm-12">订单号：{$uv.order_id}</div>
+	                                <div class="am-u-sm-12">到货时间：{$uv.sign_time}</div>
+	                                <div class="am-u-sm-12"></div>
+	                                <div class="am-u-sm-12"><hr/></div>
+	                            </div>
+	                        </div>                
+	                    </li>
+	                </ul>
+                </volist>  
+            </div>
+           
+            <div data-tab-panel-2 class="am-tab-panel am-padding-0">
+            		 <volist name="evaluated" id="ved">
+		            	   <ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+		                    <li class="am-u-sm-12">
+		                        <div class="am-u-sm-12 am-text-sm am-padding-vertical-xs am-margin-bottom-xs div-w-inbox div-w-inbox-1">
+		                            送货单号：{$ved.delivery_id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                            <span style="padding-left:10px; padding-right:10px; padding-bottom:5px; padding-top:5px; background:#CA0005 ; color:#FFF ;border-radius:5px; font-size: 12px;">
+										        	   		<if condition="$ved.level eq '1'">
+										        	   			很不满意
+										        	   		<elseif condition="$ved.level eq '2'"/>
+										        	   			不满意
+										        	   		<elseif condition="$ved.level eq '3'"/>
+										        	   			一般
+										        	   		<elseif condition="$ved.level eq '4'"/>
+										        	   			满意
+										        	   		<elseif condition="$ved.level eq '5'"/>
+										        	   			很满意
+										        	   		<else/>
+										        	   		</if>
+		                            </span>
+		                            <span class="am-badge  am-fr border-r5"></span>
+		                        </div>
+		                        <div class="am-u-sm-12">
+		                            <div class="am-u-sm-12 am-text-sm">
+		                                <div class="am-u-sm-12"></div>
+		                                <div class="am-u-sm-12">订单号：{$ved.order_id}</div>
+		                                <div class="am-u-sm-12">到货时间：{$ved.sign_time}</div>
+		                                <div class="am-u-sm-12">评价：{$ved.remark}</div>
+		                                <div class="am-u-sm-12"><hr/></div>
+		                            </div> 
+		                        </div>                
+		                    </li>
+		                </ul>
+                </volist>  
+            </div>
+        </div>
+    </div>
+    <script>
+		
+	</script>
+</section>
+</body>
+</html>
+<script>
+function goEvaluate(withgoods_id){
+  	var _url = "{:U('addon/Hospital/Evaluate/evaluate/wid/withgoods_id/token/1')}";
+  	_url = _url.replace('withgoods_id',withgoods_id);
+  	window.location.href=_url;
+}
+</script>

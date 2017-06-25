@@ -1,0 +1,317 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>送货单 - 货品详情</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="送货单 - 货品详情">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;}
+		ul,li { list-style:none;}
+		hr { border-top: 1px solid #ccc;}
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-10 { width:10%;}
+		.w-40 { width:40%;}
+		.w-80 { width:80%;}
+		.w-90 { width:90%;}
+		.w-100 { width:100%;}
+		.bg-f { background-color:#FFFFFF;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.p-horizontal-15 { padding:0 15px !important;}
+		.margin-auto { margin:auto;}
+		
+		#item-box ul li { line-height:30px;}
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		.border-g-ts { border-top:1px solid #ccc;}
+		.border-g-bs { border-bottom:1px dashed #ccc;}		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.blank-title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.goods-list li { position:relative;}
+		.goods-list li .content-number { position: absolute;height: 100%;width: 20%;right: 10%;top:0;}
+		.goods-list li .content-more { position: absolute;height: 100%;width: 10%;right: 0;top:0;}
+		.goods-list li .off { display:none;}
+		
+		.am-modal-dialog { border-radius:5px;}
+		
+		.save-box { display:none;}
+		.ribbon-wrapper{
+		  width: 80px;
+		  height: 88px;
+		  position: absolute;
+		  top: -3px;
+		  right: 0;
+		  overflow: hidden;
+		}
+		.ribbon{
+		  text-align: center;
+		  color: #fff;
+		  font-weight: 500;
+		  padding: 7px 0;
+		  width: 120px;
+		  background-color: #0E90D2;
+		  background-image: -webkit-linear-gradient(top, #0E90D2, #0D83BF);/*这里可以根据需要把所有的厂商前缀都加上*/
+		  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), inset 1px 1px 0px rgba(255, 255, 255, .1);
+		  font-size: 16px;
+		  transform: rotate(45deg); 
+		  position: relative;
+		  top: 12px; /*这个值可以根据需要来调整*/
+		  left: -3px;
+		}
+
+.edit-no { border:none;background-color:transparent;}
+
+.bg{
+	width:100%;
+	height:20px;
+	background:#E66629;
+	background-image:-webkit-gradient(linear,50% 0,0 100%,
+										from(transparent),
+										color-stop(.5,transparent),
+										color-stop(.5,#F1F1F1),
+										to(#F1F1F1)    
+					),
+					-webkit-gradient(linear,50% 0,100% 100%,
+										from(transparent),
+										color-stop(.5,transparent),
+										color-stop(.5,#F1F1F1),
+										to(#F1F1F1)                                            
+					);
+	background-image:-moz-linear-gradient(50% 0 -45deg,
+								transparent,
+								transparent 50%,
+								#d86707 50%,
+								#d86707                                            
+					),-moz-linear-gradient(50% 0 -135deg,
+								transparent,
+								transparent 50%,
+								#d86707 50%,
+								#d86707                                            
+					);                                
+	background-size:13px 6px;
+	background-repeat:repeat-x;
+	background-position:0 100%;                    
+}
+
+</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<section id="item-box">
+	<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg"></fieldset>
+    <div class="w-100 am-margin-bottom-sm"></div>
+    <form action="{:U('addon/Hospital/Hospital/deliverySendGoods')}" method="post" class="am-form" onSubmit="return check();">
+    	<input type="hidden" name="id" value="{$delivery.delivery_id}" />
+    <volist name="goods" id="item">
+    <if condition="$item.is_valid eq 2">
+    <div class="am-padding-xs am-text-sm blank-title" style="text-decoration:line-through;">
+    <else/>
+    	<div class="am-padding-xs am-text-sm blank-title">
+    </if>
+    	<if condition="($item.delivery_status neq 1 or $item.sign_status eq 3) and $item.is_valid eq 1">
+    		<input name="deliveryList[]" type="checkbox" value="{$item.withgoods_id}" />
+    	</if>
+    	<i class="am-icon-building-o am-text-lg"></i>&nbsp;&nbsp;{$item.hospital_name}&nbsp;&nbsp;&nbsp;{$item.office_name}
+    </div>
+    <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-xs am-margin-bottom-sm bg-f">
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-12 am-text-sm am-text-left">地址：{$item.address}</div>
+        </li>
+        <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-12 am-text-sm am-text-left">{$item.consignee}&nbsp;&nbsp;&nbsp;{$item.mobile}</div>
+        </li>
+        <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-12 am-text-sm am-text-left">货品类型：{$item.is_for_goods_str}&nbsp;&nbsp;|&nbsp;&nbsp;
+            	<if condition="$item.is_for_goods eq 1">
+            	货品单号：{$item.delivery_no}
+                <else />
+                发票单号：{$item.invoice_no}
+                </if>
+            </div>
+        </li>
+        <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-12 am-text-sm am-text-left">接单备注：{$item.order_remark}</div>
+        </li>
+        
+        <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+        
+        <li class="am-u-sm-12">
+            <div class="am-u-sm-4 am-text-sm am-text-left">状态：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-g">
+            	<if condition="$item.delivery_status eq 1"><!-- 已发车 -->
+                    <if condition="$delivery.is_driver eq 1">
+                        <if condition="$item.sign_status eq 1">
+                        <button type="button" onClick="dounsign({$item.withgoods_id},this)" class="am-btn am-btn-danger am-text-sm border-r-5 btn-unsign">拒 签</button>&nbsp;&nbsp;
+                        <button type="button" data="{$item.withgoods_id}" class="am-btn am-btn-success am-text-sm border-r-5 btn-sign">签收</button>            
+                        <if condition="$item.is_for_goods eq 1">
+                        	<button type="button" data="{$item.withgoods_id}" class="am-btn am-btn-primary am-text-sm border-r-5 btn-sign-4">部分签收</button>
+                        </if>            
+                        <else/>
+                        {$item.sign_name}
+                        </if>
+                    <else/>
+                    {$item.sign_name}
+                    </if>
+                <else />
+                {$item.sign_name}
+                </if>
+            </div>
+        </li>
+	</ul>    
+    </volist>
+    <if condition="$is_finish eq 0">
+	    <div class="am-g am-g-collapse am-padding-vertical-sm">
+	    	<div class="am-u-sm-12 am-text-center">
+	        	<if condition="$delivery.is_driver eq 1">
+	            <div class="am-u-sm-12"><button type="submit" id="btnSubmit" class="am-btn am-btn-primary am-text-sm w-80 border-r-5">发 车</button></div>
+	            </if>            	
+	        </div>
+	    </div>
+	</if>
+    </form>
+</section>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-success">
+    <div class="am-modal-dialog">
+        <div class="am-modal-bd content">
+        	签收成功
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-confirm>OK</span>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="do-sign">
+    <div class="am-modal-dialog">
+        <div class="am-modal-bd content">
+        	填写签收备注
+        </div>
+        <div class="am-modal-bd">
+          <input type="text" class="am-modal-prompt-input remark" style="width: 100%;margin: 0;">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-bd content">
+        	填写拒签原因
+        </div>
+        <div class="am-modal-bd">
+          <input type="text" class="am-modal-prompt-input reason" style="width: 100%;margin: 0;">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<script>
+	$(function(){
+		$(".btn-sign-4").click(function(){
+			$(".remark").val("");
+			dosign($(this), 4);
+		});
+		$(".btn-sign").on("click", function(event){
+			$(".remark").val("");
+			dosign($(this), 0);
+		}); 
+	});
+	
+	function dosign(obj, is_part){
+		$('#do-sign').modal({
+			relatedTarget: obj,
+			closeViaDimmer: false,
+			onConfirm: function(options){
+				var remark = $(".remark").val();
+				var div = this.relatedTarget.parent();
+				$.post("{:U('addon/Hospital/Hospital/deliverysign')}",
+					{gid:this.relatedTarget.attr("data"), remark:remark, status:is_part},
+					function(res){
+						if(res.errcode == 0){
+							div.html(is_part==4?"部分签收":"已签收");
+							comm_alert_e_g("签收成功");
+						}else{
+							comm_alert_e_y(res.info);		
+						}
+				});
+			},
+			onCancel: function() {
+				$(this.relatedTarget).removeAttr("disabled");
+			}
+		});
+	}
+	
+	function dounsign(id,obj){
+		$(obj).attr("disabled","true");
+		$('#my-confirm').modal({
+			relatedTarget: this,
+			closeOnConfirm: false,
+			closeViaDimmer: false,
+			onConfirm: function(options){
+				var reason = $(".reason").val();
+				if(reason == ''){
+					comm_alert_y("请填写拒签原因");
+					return;
+				}
+				$.post("{:U('addon/Hospital/Hospital/deliveryunsign')}",
+					{gid:id,rs:reason},
+					function(res){
+						if(res.errcode == 0){
+							$(obj).parent().html("被拒签");
+							$('#my-confirm').modal('close');
+							comm_alert_e_g("该货品已拒签成功");
+						}else{
+							comm_alert_e_y(res.info);		
+						}
+				});
+			},
+			onCancel: function() {
+				console.log('dounsign');
+				$(obj).removeAttr("disabled");
+			}
+		});
+	}
+	
+	
+	function check(){
+		//if (confirm("确认发车吗？")) {}
+		if($("input[name='deliveryList[]']:checked").length == 0) {
+			comm_alert_e_y("请选择需要发车的订单。");
+			return false;
+		} 
+		$('#btnSubmit').addClass("am-btn-default");
+		$('#btnSubmit').attr("disabled","true");
+		return true;
+	}
+</script>
+</body>
+</html>
