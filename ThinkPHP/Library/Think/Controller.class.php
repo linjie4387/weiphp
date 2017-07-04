@@ -587,6 +587,7 @@ abstract class Controller {
 		$userNeed = ($GLOBALS ['myinfo'] ['uid'] > 0 && $GLOBALS ['myinfo'] ['status'] < 2) || empty ( $GLOBALS ['myinfo'] );
 		$is_need_bind = $config ['need_bind'] == 1 && $config ['bind_start'] != 1 && strtolower ( $_REQUEST ['_addons'] ) != 'usercenter';
 		if (IS_GET && ! (defined ( 'IN_WEIXIN' ) && IN_WEIXIN) && $is_need_bind && $userNeed && C ( 'USER_OAUTH' )) {
+			error_log("Controller:line590:".$_REQUEST ['_addons']);
 			Cookie ( '__forward__', $_SERVER ['REQUEST_URI'] );
 			redirect ( addons_url ( 'UserCenter://Wap/bind' ) );
 		}

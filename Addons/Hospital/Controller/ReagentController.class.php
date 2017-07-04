@@ -11,7 +11,7 @@ class ReagentController extends BaseController {
 	 */
 	function goods() {
 		$user = $this->validuser ();
-		//if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
+		if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
 		if(I('path.5') == 'list' || I('path.5') == 'list.html'){
 			$page = I ( "page" ) ? I ( "page" ) : 1;
 			$goods_id = I ( "goods_id" );
@@ -40,7 +40,7 @@ class ReagentController extends BaseController {
 	 */
 	function goodsdetail() {
 		$user = $this->validuser ();
-		//if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
+		if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
 		if(I('goods_id')){
 			$goods_id = I ( "goods_id" );
 			if(D ( 'goods' )->where ('goods_id='.$goods_id)->count () == 0)$this->error ('该商品信息不存在.');

@@ -5,11 +5,12 @@ use Home\Controller\AddonsController;
 
 class BaseController extends AddonsController {
 	protected function validuser(){
-		return true;
 		$openid = get_openid ();
 		$param ['open_id'] = $openid;
 		$param['is_valid'] = 1;
 		$user = D ( "weichatuser" )->where ( $param )->find ();
+		//var_dump(get_openid ());
+		//exit;
 		if (!empty ( $user )) {
 			if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
 				return $user;

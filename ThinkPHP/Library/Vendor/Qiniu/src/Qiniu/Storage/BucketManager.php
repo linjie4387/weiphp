@@ -281,6 +281,7 @@ final class BucketManager
         $headers = $this->auth->authorization($url, $body, 'application/x-www-form-urlencoded');
         $ret = Client::post($url, $body, $headers);
         if (!$ret->ok()) {
+        	error_log("BucketManager:line283:".$ret);
             return array(null, new Error($url, $ret));
         }
         $r = ($ret->body === null) ? array() : $ret->json();

@@ -1,0 +1,56 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>{$type_name}</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="{$type_name}">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;min-height:auto;}
+		.w-100 { width:100%;}
+		.c-g { color:#888888;}
+		.bg-f { background-color:#FFFFFF;}
+		
+		header { border-bottom: 1px solid #F1F1F1;}
+		.detail-list { padding:0;}
+		.detail-list li { margin-bottom: 1em;background-color: #FFFFFF;padding:0.5em;}
+		.detail-list .content { color: #555;}
+		.detail-list li .title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.detail-list li .title:before {content: "\f02b";    display: inline-block;
+			font: normal normal normal 1.6rem/1 FontAwesome,sans-serif;
+			font-size: inherit;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-transform: translate(0,0);
+			-ms-transform: translate(0,0);
+			transform: translate(0,0);
+			padding-right:5px;
+			}
+		
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<header><img class="w-100" src="{$pic_url}"></header>
+<section>
+{$description}
+</section>
+</body>
+</html>

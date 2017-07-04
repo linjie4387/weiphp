@@ -30,29 +30,8 @@ class CartModel extends Model {
 		
 		return $info;
 	}
-	/**
-	 * 添加到购物车 by zjx 2016-07-26
-	 * @param unknown $goods
-	 * @return number
-	 */
 	function addToCart($goods) {
 		$myList = $this->getMyCart ( $goods ['uid'] );
-		$inCart = false;
-		foreach ($myList as $cart) {
-			if($cart['goods_id']==$goods['goods_id']){
-				$num = $cart['num'] + $goods['num'];
-				$map['id']=$cart['id'];
-				$this->where ( $map )->setField ( 'num', $num );
-				$inCart = true;
-				break;
-			}
-		}
-		if(!$inCart) {
-			$goods ['openid'] = get_openid ();
-			$this->add ( $goods );
-		}
-		
-		/**有bug的代码
 		if (isset ( $myList [$goods ['goods_id']] )) {
 			$num = $myList [$goods ['goods_id']] ['num'] + $goods ['num'];
 			$map ['id'] = $myList [$goods ['goods_id']] ['id'];
@@ -61,7 +40,6 @@ class CartModel extends Model {
 			$goods ['openid'] = get_openid ();
 			$this->add ( $goods );
 		}
-		*/
 		return count ( $this->getMyCart ( $goods ['uid'], true ) );
 	}
 	function delCart($ids) {

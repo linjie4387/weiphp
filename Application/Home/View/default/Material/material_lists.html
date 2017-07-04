@@ -7,10 +7,11 @@
           <empty name="model.extend">
 			<div class="tools">
 				<if condition="$add_button"><php> $add_url || $add_url = U('add?model='.$model['id'], $get_param);</php><a class="btn" href="{$add_url}">新 增</a></if>
-				<php>if(C('MATERIAL')) { </php> 
+               
+               
                 <a class="btn" href="{:U('syc_news_to_wechat')}">一键上传素材到微信素材库</a>
                 <a class="btn" href="{:U('syc_news_from_wechat')}">一键下载微信素材库到本地</a>
-                 <php> } </php>
+                
                 
                 <volist name="top_more_button" id="vo">
                 <if condition="$vo[is_buttion]">

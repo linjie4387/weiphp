@@ -130,4 +130,14 @@ class WeixinAddonModel extends WeixinModel {
 			return true; // 告诉上面的关注方法，不需要再回复欢迎语了
 		}
 	}
+	
+	
+	// 取消关注公众号事件
+	public function unsubscribe() {
+		error_log("---------user unsubcribe--------");
+		return true;
+	}
 }
+
+
+

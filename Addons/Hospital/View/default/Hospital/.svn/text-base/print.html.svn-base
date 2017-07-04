@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>订单打印</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="订单打印">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+	<style>
+		body { max-width:1024px;background-color:#FFFFFF;margin:0 auto;color:#333;}
+		
+		.w-100 { width:100%;}
+		.blank-1 { width:100%;height:1em;}
+		.am-text-center { text-align:center;}
+		
+		.info tbody tr td { padding:5px;border:1px solid #555}
+		.info div { padding:5px 30px 5px 0;display: inline-block;}
+		
+		.PageNext{page-break-after: always;}
+	</style>
+</head>
+<body>
+<section>
+    <div>
+        <div class="blank-1"></div>
+        <div class="info w-100">
+            <div><strong>订单号</strong>：251201254415</div>
+            <div><strong>医院</strong>：721医院(航天中心医院)</div>
+            <div><strong>科室</strong>：生化室</div>
+            <div><strong>提交人</strong>：陈俊</div>
+            <div><strong>是否代下单</strong>：否</div>
+            <div><strong>联系电话</strong>：17750178891</div>
+            <div><strong>下单时间</strong>：2016-04-17 01:11:07</div>
+            <div><strong>备注</strong>：一次只能传一张图片</div>
+        </div>
+    </div>
+    <div class="blank-1"></div>
+    <div>
+       <img class="w-100" src="http://7xs04f.com1.z0.glb.clouddn.com/wx_order_1460947597">
+    </div>
+</section>
+<!--分页-->
+<div class="PageNext"></div>
+<section>
+    <div>
+        <div class="blank-1"></div>
+        <div class="info w-100">
+            <div><strong>订单号</strong>：251201254415</div>
+            <div><strong>医院</strong>：721医院(航天中心医院)</div>
+            <div><strong>科室</strong>：生化室</div>
+            <div><strong>提交人</strong>：陈俊</div>
+            <div><strong>是否代下单</strong>：否</div>
+            <div><strong>联系电话</strong>：17750178891</div>
+            <div><strong>下单时间</strong>：2016-04-17 01:11:07</div>
+            <div><strong>备注</strong>：一次只能传一张图片</div>
+        </div>
+    </div>
+    <div class="blank-1"></div>
+    <div>
+       <img class="w-100" src="http://7xs04f.com1.z0.glb.clouddn.com/wx_order_1460947597">
+    </div>
+</section>
+
+<div class="blank-1"></div>
+</body>
+</html>

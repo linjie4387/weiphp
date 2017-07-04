@@ -1,0 +1,235 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>订单详情</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="订单详情">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.c-r { color:#ff0000; font-size:16px;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		.blank-1 { width:100%;height:1em;}
+		
+		.border-r-5 { border-radius:5px;}
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		
+		.img-box { display: none;position: fixed;z-index: 1000;width: 100%;height: 100%;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.56);}
+		.img-box img { border-radius:5px;width: 60%;top: 20%;position: absolute;left: 20%;}
+		
+		.search-box { position:relative;}
+		.search-box input { padding-right:50px !important;}
+		.search-box button { position:absolute;right:0;bottom:0;}
+		
+		.hos-box-sel { display:none;}
+		.btn-select { color: #555;background-color: #FFFFFF;border: 1px solid #D2D2D2;text-align: left;}
+		
+		.am-icon-close { display:none;color: #FFF;z-index: 1001;position: absolute;right: 20px;top: 30px;}
+		
+		.am-form ul li { line-height:30px;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<i onClick="showclose();" class="am-icon-close am-text-xxl"></i>
+<div id="component" class="img-box"><img id="container" src=""></div>
+<section class="am-padding-xs bg-f">
+    <form action="{:U('addon/Hospital/Hospital/confirmOrder')}" method="post" class="am-form" onSubmit="check();">
+    	<input type="hidden" id="hospitalorder_id" name="hospitalorder_id" value="{$order.hospitalorder_id}" />
+        <fieldset>
+            <legend class="am-margin-0 am-text-lg c-g"><span class="title">订单资料</span></legend>
+            <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f am-margin-bottom-sm">
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">医院：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$order.hospital_name}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">科室：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$order.office_name}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">接单公司：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$order.order_company_name}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">订单类型：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$order.order_type_name}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$remark}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">接单备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-r">{$order.admin_remark}</div>
+                </li>
+                <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12 am-padding-vertocal-xs">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">采购单照片：</div>
+                    <div class="am-u-sm-12 am-text-sm am-text-left c-y">
+                        <div id="img_list">
+                            <volist name="piclist" id="vo">
+                                 <img onClick="showimg(this);" class="list-img" src="{$vo.pic_url}">
+                            </volist>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="am-form-group am-text-center">
+            	<if condition="$order.status eq 2">
+	                <button id="btnSubmit" class="am-btn am-btn-secondary w-80" type="submit">订单确认</button>
+				</if>
+            </div>
+        </fieldset>
+    </form>
+    <script>
+		function check(){
+			$('#btnSubmit').addClass("am-btn-default");
+			$('#btnSubmit').attr("disabled","true");
+			if(confirm("是否确认订单?")) {
+				return true;
+			}else {
+				$('#btnSubmit').removeClass("am-btn-default");
+				$('#btnSubmit').addClass("am-btn-secondary");
+				$('#btnSubmit').removeAttr("disabled","true");
+				return false;
+			}
+		}
+	</script>
+	
+	<script src="http://cdn.bootcss.com/hammer.js/2.0.4/hammer.min.js"></script>
+	<script>
+	var sw = $(window).width();
+	var sh = $(window).height();
+	var component = document.getElementById("component");
+	var container = $("#container");
+	var target = $('#container').get(0);
+	var loger = $("#logger");
+	var lastPosX = 0,lastPosY = 0,posX = 0,posY = 0,moveact = 1,cw = 0,ch = 0;
+	var scroue_u = '';
+	var size = '';
+	var orig_src = {width:sw*0.6,height:sh*0.8};
+	var orig_src_set = function(w,h){
+		orig_src.width = w;
+		orig_src.height = h;
+	}
+
+	var hammertime = new Hammer(component);
+	
+	hammertime.add(new Hammer.Pinch());
+	hammertime.on("pinchstart pinchmove pinchend", function (e) {
+		switch (e.type) {
+			case 'pinchstart':
+				moveact = 2;
+				break;
+			case 'pinchmove':
+				if(moveact == 2){
+					var width = Math.floor(orig_src.width*e.scale);
+					var height = Math.floor(orig_src.height*e.scale);
+					cw = width;
+					ch = height;
+					posX = lastPosX - (width-orig_src.width)/2;
+					posY = lastPosY - (height-orig_src.height)/2;
+					container.css('width',width+'px');
+					container.css('height',height+'px');
+				}
+				break;
+			case 'pinchend':
+				orig_src_set(cw,ch);
+				lastPosX = posX;
+				lastPosY = posY;
+				moveact = 1;
+				break;
+		}
+		actransform();
+	});
+	hammertime.on("pan panend", function(e){
+		if(moveact == 1){
+			switch (e.type) {
+				case 'pan':
+					posX = e.deltaX + lastPosX;
+					posY = e.deltaY + lastPosY;
+					break;
+				case 'panend':
+					lastPosX = posX;
+					lastPosY = posY;
+					break;
+			}
+			actransform();
+		}
+	});
+	//移动
+	var actransform = function(){
+		var transform = "translate(" + posX + "px," + posY + "px)";
+		target.style.transform = transform;
+		target.style.oTransform = transform;
+		target.style.msTransform = transform;
+		target.style.mozTransform = transform;
+		target.style.webkitTransform = transform;
+	}
+	//缩放
+	var acresize = function() {	
+		size = '/thumbnail/'+orig_src.width+'x';
+		var u = scroue_u+'?imageMogr2'+size+'/format/jpg';
+		container.attr('src',u);
+	};
+	var reloadimg = function(){
+		lastPosX = 0,lastPosY = 0,posX = 0,posY = 0;		
+		actransform();
+		container.css('width',orig_src.width+'px');
+		container.css('height',orig_src.height+'px');
+	}
+	
+	var cur_view;
+	function showimg(obj){
+		cur_view = obj
+		var url = $(obj).attr("src");
+		$(".img-box img").attr("src",url);
+		scroue_u = url;
+		var img = new Image;
+		img.crossOrigin = 'Anonymous';
+		img.onload = function(){
+			var ih = sw*0.6*img.height/img.width;
+			orig_src_set(sw*0.6,ih);
+			reloadimg();
+		};
+		img.src = url;
+		$(".am-icon-close").show();
+		$(".img-box").show();
+		$(obj).addClass("cur");			
+	}
+	function showclose(){
+		$(".img-box").hide();
+		$(".am-icon-close").hide();
+		$(cur_view).removeClass("cur");	
+	}
+</script>
+</section>
+</body>
+</html>

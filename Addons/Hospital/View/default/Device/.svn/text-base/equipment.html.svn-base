@@ -1,0 +1,220 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>仪器信息</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="仪器信息">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.am-nav-tabs>li>a { margin:0;}
+		.am-nav-tabs { border-bottom: 1px solid #0E9CDC !important;}
+		.am-nav-tabs>li.am-active>a, .am-nav-tabs>li.am-active>a:focus, .am-nav-tabs>li.am-active>a:hover { color: #FFFFFF !important;background-color: #0e90d2 !important;}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+
+<section class="am-padding-xs bg-f">
+	<fieldset class="am-margin-0 am-padding-0">
+            <legend class="am-margin-0 am-text-lg c-g"><span class="title">仪器信息</span></legend>
+    </fieldset>
+    <div class="am-tabs" data-am-tabs id="doc-tab-demo-1">
+         <ul class="am-tabs-nav am-nav am-nav-tabs ">
+            <li class="am-active"><a href="[data-tab-panel-1]">医院信息</a></li>
+            <li><a href="[data-tab-panel-2]">仪器信息</a></li>
+            <li><a href="[data-tab-panel-3]">服务信息</a></li>
+          </ul>
+        <div data-tab-panel-1 class="am-tabs-bd border-n">
+            <div class="am-tab-panel am-padding-0 am-active">
+            	<ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">县区：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.district_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">用户等级：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.level}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">编号：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.code}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">医院等级：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.hospital_level}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">医院名称：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">开票名称：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.invoice_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">使用科室：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.office_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">联系电话：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.contact_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">联系人：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.contact_phone}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">地址：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.address}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">邮编：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$hospital.post_code}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                </ul>
+            </div>
+            <div data-tab-panel-2 class="am-tab-panel am-padding-0">
+            	<ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+                	<li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">厂家：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.supplier_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">维修级别：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.service_level}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">仪器型号：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.model_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">说明：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.instruction}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">仪器序号：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.serial_code}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">仪器二维码：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.qrcode}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">装机时间：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.install_time}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">保修年限：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.warranty_period}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">保修日期：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.warranty_time}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">仪器编号：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.code}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">厂家安装单：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.supplier_install_order_id}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-5 am-text-lg am-text-right f-w-6">公司安装单：</div>
+                        <div class="am-u-sm-7 am-text-lg c-g">{$device.company_install_order_id}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                </ul>
+            </div>
+            <div data-tab-panel-3 class="am-tab-panel am-padding-0">
+            	<ul class="am-g am-g-collapse am-padding-vertical-sm am-padding-horizontal-sm">
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">销售：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.saler_name}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">试剂来源：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.reagent_source}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">送货：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.deliveryman}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">维修：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.serviceman}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">应用：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.applyman}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">保养周期：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.service_period}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                    <li class="am-u-sm-12">
+                        <div class="am-u-sm-4 am-text-lg am-text-right f-w-6">应用周期：</div>
+                        <div class="am-u-sm-8 am-text-lg c-g">{$device.apply_period}</div>
+                        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+		
+	</script>
+</section>
+</body>
+</html>

@@ -121,6 +121,8 @@ class MaterialController extends HomeController {
 		$field = 'a.id,title,cover_id,intro,a.group_id,b.count';
 		$subQuery = M ( 'material_news' )->where($map)->field("group_id, min(id) as id, count(id) as count")->group("group_id")->buildSql();
 		$list = M ( 'material_news' )->table("wp_material_news a, (".$subQuery.") b")->where ( "a.id=b.id" )->field ( $field )->order("group_id desc")->selectPage();
+		//$list = M ( 'material_news' )->join("(".$subQuery.") b on wp_material_news.id=b.id")->field ( $field )->select();
+		//$list = M ( 'material_news' )->where ( $map )->field ( $field . ',count(id) as count' )->order ( 'group_id desc' )->group ( 'group_id' )->selectPage ();
 		
 		foreach ( $list ['list_data'] as &$vo ) {
 			if ($vo ['count'] == 1)

@@ -1400,7 +1400,6 @@ function GetCurUrl() {
 	if (isset ( $_SERVER ['HTTPS'] ) && $_SERVER ['HTTPS'] == 'on') {
 		$url = 'https://';
 	}
-	error_log("--------".C('SERVER_PORT'));
 	if(C('SERVER_PORT')){
 		if(C('SERVER_PORT')!='80'){
 			$url .= $_SERVER ['HTTP_HOST'] . ':' . C('SERVER_PORT') . $_SERVER ['REQUEST_URI'];
@@ -1423,15 +1422,20 @@ function GetCurUrl() {
 // 获取当前用户的OpenId
 function get_openid($openid = NULL) {
 	$token = get_token ();
+	error_log("token:".$token);
 	if ($openid !== NULL && $openid != '-1') {
+		error_log("session:".session_id().":openid:".$openid);
 		session ( 'openid_' . $token, $openid );
 	} elseif (! empty ( $_REQUEST ['openid'] ) && $_REQUEST ['openid'] != '-1' && $_REQUEST ['openid'] != '-2') {
+		error_log("22222::::".$openid);
 		session ( 'openid_' . $token, $_REQUEST ['openid'] );
 	}
 	$openid = session ( 'openid_' . $token );
+	error_log("openid:".$openid);
 	$isWeixinBrowser = isWeixinBrowser ();
 	if ((empty ( $openid ) || $openid == '-1') && $isWeixinBrowser && $_REQUEST ['openid'] != '-2' && IS_GET && ! IS_AJAX) {
 		$callback = GetCurUrl ();
+		error_log("3333::::".$callback);
 		OAuthWeixin ( $callback, $token );
 	}
 	if (empty ( $openid )) {
@@ -1623,10 +1627,14 @@ function OAuthWeixin($callback, $token = '') {
 	} else {
 		$callback .= '&';
 	}
-	
-	if (! $isWeixinBrowser || ! C ( 'USER_OAUTH' ) || empty ( $info ['appid'] )) {
+	error_log("function:line1629:".$info ['appid'] );
+	error_log("USER_AUTH:".C ( 'USER_OAUTH' ) );
+	error_log("isWeixinBrowser:".$isWeixinBrowser);
+//	if (! $isWeixinBrowser || ! C ( 'USER_OAUTH' ) || empty ( $info ['appid'] )) {
+	if (! $isWeixinBrowser || empty ( $info ['appid'] )) {
 		redirect ( $callback . 'openid=-2' );
 	}
+	error_log("----call weixin get open id-----");
 	$param ['appid'] = $info ['appid'];
 	
 	if (! isset ( $_GET ['getOpenId'] )) {
