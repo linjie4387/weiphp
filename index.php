@@ -45,7 +45,7 @@ if (! empty ( $_GET ['echostr'] ) && ! empty ( $_GET ["signature"] ) && ! empty 
 define ( 'APP_DEBUG', true );
 define ( 'SHOW_ERROR', true );
 
-define ( 'IN_WEIXIN', true );
+define ( 'IN_WEIXIN', false );
 define ( 'DEFAULT_TOKEN', '-1' ); 
 
 /**
