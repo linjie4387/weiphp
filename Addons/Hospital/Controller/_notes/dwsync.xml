@@ -3,4 +3,7 @@
 <file name="OrderEventController.class.php" server="114.55.27.112//data1/sci/apps/websites/weiphp_mk/" local="131421803624685000" remote="131421810120000000" Dst="0" />
 <file name="HospitalController.class.php" server="114.55.27.112//data1/sci/apps/websites/weiphp_mk/" local="131424884813400000" remote="131424891400000000" Dst="0" />
 <file name="EvaluateController.class.php" server="114.55.27.112//data1/sci/apps/websites/weiphp_mk/" local="131414517688266018" remote="131414524040000000" Dst="0" />
+<file name="BaseController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436150371131009" remote="131436157290000000" Dst="0" />
+<file name="ReagentController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436277438035000" remote="131436284660000000" Dst="0" />
+<file name="OrderEventController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436139557056009" remote="131436147930000000" Dst="0" />
 </dwsync>

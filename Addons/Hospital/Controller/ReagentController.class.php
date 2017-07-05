@@ -1,7 +1,6 @@
 <?php
 
 namespace Addons\Hospital\Controller;
-
 use Addons\Hospital\Model\WeichatuserModel;
 
 class ReagentController extends BaseController {
@@ -11,7 +10,7 @@ class ReagentController extends BaseController {
 	 */
 	function goods() {
 		$user = $this->validuser ();
-		if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
+		//if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
 		if(I('path.5') == 'list' || I('path.5') == 'list.html'){
 			$page = I ( "page" ) ? I ( "page" ) : 1;
 			$goods_id = I ( "goods_id" );
@@ -22,8 +21,8 @@ class ReagentController extends BaseController {
 				$map['_logic'] = 'or';
 				$maps['_complex'] = $map;
 			}
-			$deviceList = D ( 'goods' )->where($maps)->page ( $page, $pagesize )->select ();
-			$count = D ( 'goods' )->where($maps)->count ();
+			$deviceList = D ( 'goodsmeta' )->where($maps)->page ( $page, $pagesize )->select ();
+			$count = D ( 'goodsmeta' )->where($maps)->count ();
 			$data ['devicelist'] = $deviceList;
 			$data ['page'] = $page;
 			$data ['pagesize'] = I("pagesize")?(int)I( "pagesize"):10;
@@ -40,11 +39,13 @@ class ReagentController extends BaseController {
 	 */
 	function goodsdetail() {
 		$user = $this->validuser ();
-		if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
+		//if($user['type'] != WeichatuserModel::USER_TYPE_AGENT)$this->error ('该页面您无权限查看.');
+		//echo I('goods_id');
+		//exit;
 		if(I('goods_id')){
 			$goods_id = I ( "goods_id" );
-			if(D ( 'goods' )->where ('goods_id='.$goods_id)->count () == 0)$this->error ('该商品信息不存在.');
-			$data['goods'] = D ( 'goods' )->where ('goods_id='.$goods_id)->find ();
+			if(D ( 'goodsmeta' )->where ('goods_id='.$goods_id)->count () == 0)$this->error ('该商品信息不存在.');
+			$data['goods'] = D ( 'goodsmeta' )->where ('goods_id='.$goods_id)->find ();
 			$data['img'] = array();
 			if(D('goodsimgs')->where(array('goods_no'=>(string)$data['goods']['goods_no']))->count() > 0){
 				$data['img'] = D ('goodsimgs')->where ('goods_no='.$data['goods']['goods_no'])->find();

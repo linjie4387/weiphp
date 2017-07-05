@@ -107,14 +107,25 @@
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12 am-padding-vertocal-xs">
-            <div class="am-u-sm-4 am-text-sm am-text-left">商品照片：</div>
-            <div class="am-u-sm-12 am-text-sm am-text-left c-y">
-                <div id="img_list">
-                	<img class="list-img" onClick="showimg(this);" src="{$img.regimg}">
-                	<img class="list-img" onClick="showimg(this);" src="{$img.noticeimg}">
-                	<img class="list-img" onClick="showimg(this);" src="{$img.labelimg}">
+        	<if condition="$img.regimg neq null or $img.noticeimg neq null or $img.labelimg neq null">
+                <div class="am-u-sm-4 am-text-sm am-text-left">商品信息下载： </div>
+                <div class="am-u-sm-12 am-text-sm am-text-left c-y">
+                    <div id="img_list">
+                        <if condition="$img.regimg neq null">
+                            点击下载：<a href="{$img.regimg}">注册证信息</a></br>
+                        </if>
+                        <if condition="$img.noticeimg neq null">
+                            点击下载：<a href="{$img.noticeimg}">说明书信息</a></br>
+                        </if>
+                        <if condition="$img.labelimg neq null">
+                            点击下载：<a href="{$img.labelimg}">标签信息</a></br>
+                        </if>
+                        <img class="list-img" style="display:none" onClick="showimg(this);" src="{$img.regimg}">
+                        <img class="list-img" style="display:none" onClick="showimg(this);" src="{$img.noticeimg}">
+                        <img class="list-img" style="display:none" onClick="showimg(this);" src="{$img.labelimg}">
+                    </div>
                 </div>
-            </div>
+            </if>
         </li>
     </ul>
     

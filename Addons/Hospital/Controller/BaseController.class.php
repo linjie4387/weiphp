@@ -5,17 +5,16 @@ use Home\Controller\AddonsController;
 
 class BaseController extends AddonsController {
 	protected function validuser(){
-		$openid = get_openid ();
-		$param ['open_id'] = $openid;
+		$openid = get_openid();
+		$param['open_id'] = $openid;
 		$param['is_valid'] = 1;
-		$user = D ( "weichatuser" )->where ( $param )->find ();
-		//var_dump(get_openid ());
-		//exit;
+		$user = D ( "weichatuser" )->where ($param )->find ();
+		
 		if (!empty ( $user )) {
-			if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
+			if ($user['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
 				return $user;
 			}else {
-				switch ($user ['status']) {
+				switch ($user['status']) {
 					case WeichatuserModel::USER_STATUS_AUDIT_FAILED :
 						$this->assign ( "title", "审核失败" );
 						$this->assign ( "content", "您的信息审核未通过，请填写正确的注册信息。" );
