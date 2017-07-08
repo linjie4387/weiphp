@@ -847,6 +847,10 @@ class HospitalController extends BaseController {
 				$data['isrun']=0;
 				D('car')->where("car_id=".$dilivwm['car_id'])->save($data);
 				D('deliveryman')->where("deliveryman_id=".$dilivwm['driver_deliveryman_id'])->save($data);
+				
+				$deliverydata['status']=5;
+				$deliverydata['modify_time']=date ( "Y-m-d H:i:s" );
+				D('delivery')->where("delivery_id=".$deliveryid)->save($deliverydata);
 
 			}
 		}

@@ -9,7 +9,6 @@ class BaseController extends AddonsController {
 		$param['open_id'] = $openid;
 		$param['is_valid'] = 1;
 		$user = D ( "weichatuser" )->where ($param )->find ();
-		
 		if (!empty ( $user )) {
 			if ($user['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
 				return $user;
