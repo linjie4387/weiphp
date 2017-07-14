@@ -858,14 +858,15 @@ class HospitalController extends BaseController {
 	
 	function createEvaluateTest(){
 		//echo $tpl;
-		$withGoods = D('deliverywithgoods')->where("withgoods_id=1059")->find();
+		
+		$withGoods = D('deliverywithgoods')->where("withgoods_id=772")->find();
 		$this->createEvaluate($withGoods,'1','admin','3');
 	}
 	//签收、部分签收、拒签后，给客户发送消息。
 	function createEvaluate($withGoods,$userid,$username,$status){
+
 		$delivery = D('delivery')->where("delivery_id=".$withGoods['delivery_id'])->find();
 		$driver = D('deliveryman')->where("deliveryman_id=".$delivery['driver_deliveryman_id'])->find();
-
 		$order = D('order')->where("order_id=".$withGoods['order_id'])->find();
 		$weichatuser = D('weichatuser')->where("weichatuser_id=".$order['weichatuser_id'])->find();
 		if($withGoods['is_for_goods']==1) {
@@ -903,7 +904,7 @@ class HospitalController extends BaseController {
 		$config = getAddonConfig("Hospital");
 		$tpl = $config["template.delivery.notify"];
 		$token = $config["template.token"];
-
+		//echo $token;
 		$url = U ( '/addon/Hospital/Evaluate/evaluate/wid/' . $withGoods['withgoods_id'] .'/token/'.$token);
 
 		$res = array();
@@ -918,6 +919,7 @@ class HospitalController extends BaseController {
 		$content ['keyword5'] = $driver['mobile'];//送货电话
 		$content ['remark'] = "如有疑问请联系送货人员，点击“详情”评价。";
 		//echo json_encode($content);
+		//echo $token;
 		$res = $this->_sendTemplateMsg ( $openid, $content, $tpl, $url, $token );
 	}
 	
