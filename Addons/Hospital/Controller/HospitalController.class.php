@@ -150,52 +150,80 @@ class HospitalController extends BaseController {
 	function listOrder() {
 		$user = $this->validuser ();
 		if ($user) {
-			if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
-				$map ['weichatuser_id'] = $user ['weichatuser_id'];
-				$page = I ( 'page' ) ? I ( 'page' ) : 1;
-				$pageSize = I ( 'pagesize' ) ? I ( 'pagesize' ) : 10;
-				$orders = D ( 'hospitalorder' )->where ( $map )->order ( 'hospitalorder_id desc' )->page ( $page, $pageSize )->select ();
-				$count = D ( 'hospitalorder' )->where ( $map )->count ();
-				foreach ( $orders as &$order ) {
+			if($user['type']==3){//如果是代下单用户，则查看本人处理过的历史配送任务。
+				$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1")->find();
+				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and b.open_id='".$user ['open_id']."'");
+				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status >2" )->page ( $page, $pageSize )->select ();
+				
+				foreach ( $delivery as &$deli ) {
 					$map = array (
-							"key_id" => DatadictModel::KEY_ORDER_STATUS, // 订单状态
-							"value" => $order ['status'] 
+							"key_id" => DatadictModel::KEY_DELIVERY_STATUS, // 送单状态
+							"value" => $deli ['status'] 
 					);
 					$dict = D ( 'datadict' )->where ( $map )->find ();
-					$order ['status_name'] = $dict ['name'];
-					$piclist = D('OrderPic')->where("order_id={$order['hospitalorder_id']} and type=1")->field('pic_url')->select();
-					$p_company = array (
-							"key_id" => DatadictModel::KEY_ORDER_COMPANY, // 订单状态
-							"value" => $order ['order_company']
-					);
-					$company = D("datadict")->where($p_company)->find();
-					$order['piclist'] = $piclist;
-					$order['order_company_name'] = $company['name'];
-					if($order['is_agent']==HospitalorderModel::ORDER_TYPE_HOSPITAL){
-						$order['order_type_name'] = '医院下单';
-					}else {
-						$order['order_type_name'] = '代下单';
-					}
-					$myord = D('order')->where('hospitalorder_id='.$order['hospitalorder_id'])->find();
-					if($myord){
-						$order['order_id']=$myord['order_id'];
+					$deli ['status_name'] = $dict ['name'];
+					
+					if($driver){
+						if($driver['deliveryman_id'] == $deli['driver_deliveryman_id']){
+							$deli['is_driver'] = 1;
+						}else{
+							$deli['is_driver'] = 0;	
+						}
+					}else{
+						$deli['is_driver'] = 0;
 					}
 				}
-				if (! $_POST) {
-					$this->assign ( "page", $page );
-					$this->assign ( "pagesize", $pageSize );
-					$this->assign ( "totalpage", $count / $pageSize );
-					$this->assign ( "orders", $orders );
-					$this->display ( "Hospital/orderlist" );
+	
+				$this->assign("deliverylist", $delivery);
+				$this->display ( "Hospital/undelivery" );				
+			}else{  //如果是医院用户，则查看历史订单
+				if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
+					$map ['weichatuser_id'] = $user ['weichatuser_id'];
+					$page = I ( 'page' ) ? I ( 'page' ) : 1;
+					$pageSize = I ( 'pagesize' ) ? I ( 'pagesize' ) : 10;
+					$orders = D ( 'hospitalorder' )->where ( $map )->order ( 'hospitalorder_id desc' )->page ( $page, $pageSize )->select ();
+					$count = D ( 'hospitalorder' )->where ( $map )->count ();
+					foreach ( $orders as &$order ) {
+						$map = array (
+								"key_id" => DatadictModel::KEY_ORDER_STATUS, // 订单状态
+								"value" => $order ['status'] 
+						);
+						$dict = D ( 'datadict' )->where ( $map )->find ();
+						$order ['status_name'] = $dict ['name'];
+						$piclist = D('OrderPic')->where("order_id={$order['hospitalorder_id']} and type=1")->field('pic_url')->select();
+						$p_company = array (
+								"key_id" => DatadictModel::KEY_ORDER_COMPANY, // 订单状态
+								"value" => $order ['order_company']
+						);
+						$company = D("datadict")->where($p_company)->find();
+						$order['piclist'] = $piclist;
+						$order['order_company_name'] = $company['name'];
+						if($order['is_agent']==HospitalorderModel::ORDER_TYPE_HOSPITAL){
+							$order['order_type_name'] = '医院下单';
+						}else {
+							$order['order_type_name'] = '代下单';
+						}
+						$myord = D('order')->where('hospitalorder_id='.$order['hospitalorder_id'])->find();
+						if($myord){
+							$order['order_id']=$myord['order_id'];
+						}
+					}
+					if (! $_POST) {
+						$this->assign ( "page", $page );
+						$this->assign ( "pagesize", $pageSize );
+						$this->assign ( "totalpage", $count / $pageSize );
+						$this->assign ( "orders", $orders );
+						$this->display ( "Hospital/orderlist" );
+					} else {
+						$data ['orders'] = $orders;
+						$data ['page'] = $page;
+						$data ['pagesize'] = $pageSize;
+						$data ['totalpage'] = $count / $pageSize;
+						$this->success ( $data, "", true );
+					}
 				} else {
-					$data ['orders'] = $orders;
-					$data ['page'] = $page;
-					$data ['pagesize'] = $pageSize;
-					$data ['totalpage'] = $count / $pageSize;
-					$this->success ( $data, "", true );
+					$this->display ( "Hospital/show" );
 				}
-			} else {
-				$this->display ( "Hospital/show" );
 			}
 		} else {
 			redirect ( U ( 'regist' ) );
@@ -272,6 +300,9 @@ class HospitalController extends BaseController {
 	 * 订单确认
 	 */
 	function confirmOrder(){
+		$user = $this->validuser ();
+		//echo json_encode($user);	
+		//exit;
 		$orderId = I("hospitalorder_id");
 		$o = D("hospitalorder")->where("hospitalorder_id=".$orderId)->find();
 		if(!$o) {
@@ -285,7 +316,6 @@ class HospitalController extends BaseController {
 			if(!IS_AJAX){
 				redirect ( U ( 'listOrder' ) );
 			}else {
-				$rs["errcode"] =0;
 				$this->ajaxReturn($rs);
 			}
 		}else {
@@ -550,7 +580,70 @@ class HospitalController extends BaseController {
 			redirect ( U ( 'regist' ) );
 		}
 	}
+	/**
+	 * 未派送的送货单
+	 */
+	function myundelivery() {
+		$user = $this->validuser ();
+		//if($user){
+		//}else{
+		//	$user['weichatuser_id'] ='226';
+		//	$user['open_id'] ='of7oJsx6_djUxdO66koZ90cDa6DY';
+		//}
+		if ($user) {
+			$page = I ( 'page' ) ? I ( 'page' ) : 1;
+			//$pageSize = I ( 'pagesize' ) ? I ( 'pagesize' ) : 10;
+			$pageSize = 100;
+			//司机、代下单用户，查看未配送的订单
+			if($user['type'] == '3'){
+				$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1")->find();
+				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and b.open_id='".$user ['open_id']."'");
+				$count = D ( 'delivery' )->where("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status <=2" )->count ();
+				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status <=2" )->page ( $page, $pageSize )->select ();
+				
+				foreach ( $delivery as &$deli ) {
+					$map = array (
+							"key_id" => DatadictModel::KEY_DELIVERY_STATUS, // 送单状态
+							"value" => $deli ['status'] 
+					);
+					$dict = D ( 'datadict' )->where ( $map )->find ();
+					$deli ['status_name'] = $dict ['name'];
+					
+					if($driver){
+						if($driver['deliveryman_id'] == $deli['driver_deliveryman_id']){
+							$deli['is_driver'] = 1;
+						}else{
+							$deli['is_driver'] = 0;	
+						}
+					}else{
+						$deli['is_driver'] = 0;
+					}
+				}
 	
+				$this->assign("deliverylist", $delivery);
+				$this->display ( "Hospital/undelivery" );
+			}else{
+				//查出待处理的预订单
+				$orderlist = D ( 'hospitalorder' )->where ("weichatuser_id=".$user['weichatuser_id']." and status =2" )->page ( $page, $pageSize )->select ();
+				foreach ( $orderlist as &$order ) {
+					$map = array (
+							"key_id" => DatadictModel::KEY_ORDER_STATUS, // 送单状态
+							"value" => $order ['status'] 
+					);
+					$dict = D ( 'datadict' )->where ( $map )->find ();
+					$order ['status_name'] = $dict ['name'];
+				}
+				$config = getAddonConfig("Hospital");
+				$tpl = $config["template.delivery.notify"];
+				$token = $config["template.token"];
+				$this->assign("orderlist", $orderlist);
+				$this->assign("token",$token);
+				$this->display( "Hospital/undealorderlist" );
+			}
+		} else {
+			redirect ( U ( 'regist' ) );
+		}
+	}
 	/**
 	 * 送货单 - 货品明细
 	 */
@@ -558,6 +651,7 @@ class HospitalController extends BaseController {
 		$user = $this->validuser ();
 		if ($user) {
 			$delivery_id = I("id");
+			//$from = I("from");
 			$delivery = D("delivery")->where("delivery_id = $delivery_id")->find();
 			$delivery_status = D ( 'datadict' )->where ( "key_id = ".DeliveryModel::KEY_DELIVERY_STATUS." and value = ".$delivery['status'] )->find();
 			$delivery['status_name'] = $delivery_status['name'];
@@ -618,6 +712,7 @@ class HospitalController extends BaseController {
 			$this->assign("delivery", $delivery);
 			$this->assign("goods", $goods);
 			$this->assign("is_finish", $is_finish);
+			//$this->assign("from", $from);
 			$this->display ( "Hospital/deliverygoods" );
 		} else {
 			redirect ( U ( 'regist' ) );
@@ -858,15 +953,14 @@ class HospitalController extends BaseController {
 	
 	function createEvaluateTest(){
 		//echo $tpl;
-		
-		$withGoods = D('deliverywithgoods')->where("withgoods_id=772")->find();
+		$withGoods = D('deliverywithgoods')->where("withgoods_id=1059")->find();
 		$this->createEvaluate($withGoods,'1','admin','3');
 	}
 	//签收、部分签收、拒签后，给客户发送消息。
 	function createEvaluate($withGoods,$userid,$username,$status){
-
 		$delivery = D('delivery')->where("delivery_id=".$withGoods['delivery_id'])->find();
 		$driver = D('deliveryman')->where("deliveryman_id=".$delivery['driver_deliveryman_id'])->find();
+
 		$order = D('order')->where("order_id=".$withGoods['order_id'])->find();
 		$weichatuser = D('weichatuser')->where("weichatuser_id=".$order['weichatuser_id'])->find();
 		if($withGoods['is_for_goods']==1) {
@@ -904,7 +998,7 @@ class HospitalController extends BaseController {
 		$config = getAddonConfig("Hospital");
 		$tpl = $config["template.delivery.notify"];
 		$token = $config["template.token"];
-		//echo $token;
+
 		$url = U ( '/addon/Hospital/Evaluate/evaluate/wid/' . $withGoods['withgoods_id'] .'/token/'.$token);
 
 		$res = array();
@@ -919,7 +1013,6 @@ class HospitalController extends BaseController {
 		$content ['keyword5'] = $driver['mobile'];//送货电话
 		$content ['remark'] = "如有疑问请联系送货人员，点击“详情”评价。";
 		//echo json_encode($content);
-		//echo $token;
 		$res = $this->_sendTemplateMsg ( $openid, $content, $tpl, $url, $token );
 	}
 	

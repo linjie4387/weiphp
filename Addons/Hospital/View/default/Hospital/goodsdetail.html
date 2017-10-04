@@ -57,13 +57,13 @@
     <legend class="am-margin-0 am-text-lg c-g"><span class="title">商品资料</span></legend>
     <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-sm bg-f am-margin-bottom-sm">
         <li class="am-u-sm-12 am-padding-vertocal-xs">
-            <div class="am-u-sm-4 am-text-sm am-text-left">名称：</div>
-            <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.name}</div>
+            <div class="am-u-sm-4 am-text-sm am-text-left">编号：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.goods_no}</div>
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12 am-padding-vertocal-xs">
-            <div class="am-u-sm-4 am-text-sm am-text-left">外部名称：</div>
-            <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.extern_name}</div>
+            <div class="am-u-sm-4 am-text-sm am-text-left">名称：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.name}</div>
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12 am-padding-vertocal-xs">
@@ -72,7 +72,7 @@
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12 am-padding-vertocal-xs">
-            <div class="am-u-sm-4 am-text-sm am-text-left">容积：</div>
+            <div class="am-u-sm-4 am-text-sm am-text-left">容积(ml)：</div>
             <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.volume}</div>
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
@@ -82,10 +82,15 @@
         </li>
         <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12 am-padding-vertocal-xs">
+            <div class="am-u-sm-4 am-text-sm am-text-left">测试数：</div>
+            <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.testnum}</div>
+        </li>
+        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <!--li class="am-u-sm-12 am-padding-vertocal-xs">
             <div class="am-u-sm-4 am-text-sm am-text-left">大试剂：</div>
             <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods['is_20l']==1?'是':'否'}</div>
         </li>
-        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" />
+        <hr data-am-widget="divider" class="am-divider am-divider-dashed m-5" /-->
         <li class="am-u-sm-12 am-padding-vertocal-xs">
             <div class="am-u-sm-4 am-text-sm am-text-left">项目品类：</div>
             <div class="am-u-sm-8 am-text-sm am-text-right c-y">{$goods.category}</div>

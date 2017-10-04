@@ -102,8 +102,32 @@ class OrderEventController extends AddonsController {
 		// 取所有审核通过的成员列表
 		// 发送模版消息
 		$content ['first'] = "您好，您的订单状态发生了变化。";
-		$content ['keyword1'] = "订单号" . $tid;
+		$content ['keyword1'] = "订单号" . $oid;
 		$content ['keyword2'] = "已受理";
+		$content ['keyword3'] = date ( "Y年m月d日 H:i" );
+		$content ['remark'] = "请点击“详情”对订单进行确认。";
+		$config = getAddonConfig("Hospital");
+		//$tpl = "26BeaYS4TM1OqG-Th_tGYWlO2KKKg8P6V_say_Z2UhU";
+		$tpl = $config["template.order.confirm"];
+		// $token = get_token();
+		error_log ( "order event controller:token:" . $token.":tpl:".$tpl );
+		$url = U ( 'addon/Hospital/Hospital/myorderdetail/oid/' . $oid .'/token/'.$token );
+		$res = $this->_sendTemplateMsg ( $openid, $content, $tpl, $url, $token );
+		$this->_sendTemplateMsgReturn($res);
+	}
+
+	public function delperorder() {
+		$param = $GLOBALS ['HTTP_RAW_POST_DATA'];
+		error_log ( $param );
+		$input = json_decode ( $param );
+		$token = $input->token;
+		$openid = $input->open_id;
+		$oid = $input->order_id;
+		// 取所有审核通过的成员列表
+		// 发送模版消息
+		$content ['first'] = "您好，您的订单已被删除";
+		$content ['keyword1'] = "订单号" . $oid;
+		$content ['keyword2'] = "已删除";
 		$content ['keyword3'] = date ( "Y年m月d日 H:i" );
 		$content ['remark'] = "请点击“详情”对订单进行确认。";
 		$config = getAddonConfig("Hospital");

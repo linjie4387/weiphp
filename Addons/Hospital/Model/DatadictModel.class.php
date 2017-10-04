@@ -18,4 +18,6 @@ class DatadictModel extends Model{
 	const KEY_ORDER_STATUS = 1004;
 	//接单公司
 	const KEY_ORDER_COMPANY = 1005;
+	//送货单状态
+	const KEY_DELIVERY_STATUS = 1008;
 }

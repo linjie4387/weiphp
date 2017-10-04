@@ -136,7 +136,7 @@
                             <select id="order_company" name="order_company" required>
                                 <option value="-1">-= 选择接单公司 =-</option>
                                 <volist name="companylist" id="company">
-                                <option value="{$company.value}">{$company.name}</option>
+                                	<option value="{$company.value}">{$company.name}</option>
                                 </volist>
                             </select>
                             <span class="am-form-caret"></span>
@@ -343,7 +343,9 @@
             wx.error(function(res){
                 comm_alert_e_y("FAIL(wx)！");
             });
-			
+			if($('#order_company').get(0).options.length == 2){
+				$('#order_company').get(0).selectedIndex= 1;
+			}
         });	
     </script>
 </section>

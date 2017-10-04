@@ -18,6 +18,9 @@ class ReagentController extends BaseController {
 			if(I('name')){
 				$map['name']  = array('like','%'.I('name').'%');
 				$map['goods_no']  = array('like','%'.I('name').'%');
+				$map['machine']  = array('like','%'.I('name').'%');
+				$map['manu']  = array('like','%'.I('name').'%');
+				$map['category']  = array('like','%'.I('name').'%');
 				$map['_logic'] = 'or';
 				$maps['_complex'] = $map;
 			}

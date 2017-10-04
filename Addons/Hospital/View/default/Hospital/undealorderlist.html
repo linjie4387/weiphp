@@ -1,0 +1,173 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>历史订单</title>
+	<meta name="renderer" content="webkit"> 
+	<meta http-equiv="Cache-Control" content="no-siteapp"> 
+	<meta name="mobile-web-app-capable" content="yes"> 
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="历史订单">
+	<meta name="msapplication-TileColor" content="#0e90d2">
+	
+
+	<link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="{:ADDON_PUBLIC_PATH}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+    <script src="{:ADDON_PUBLIC_PATH}/js/notice_msg.js"></script>
+	<style>
+		body { background-color:#F1F1F1;min-height:100vh;}
+		.c-g { color:#969696;}
+		.c-l { color:#5EB95E;}
+		.c-r { color:#E43048;}
+		.c-y { color:#D86833;}
+		.bg-f { background-color:#FFFFFF;}
+		.w-80 { width:80%;}
+		.w-100 { width:100%;}
+		.m-5 { margin:5px 0 !important;}
+		.f-w-6 { font-weight:600;}
+		.blank-1 { width:100%;height:1em;}
+		
+		.list-img { width: 68px;border-radius: 5px;margin-right: 10px;}
+		.title { border-left: 3px solid #5EB95E;padding-left:10px;}
+		.border-n { border:none !important;}
+		
+		.border-r-5 { border-radius:5px;}
+		
+		#op_loading { display:none;position: fixed;bottom: 20px;width: 100%;color: #FFF;text-align: center;z-index: 1000;}
+		#op_loading .op-loading { background-color: rgba(0, 0, 0, 0.43);padding: 4px 20px;border-radius: 5px;}
+		#op_loading .op-loading .msg { font-style:normal;}
+		
+		.img-box { display: none;position: fixed;z-index: 1000;width: 100%;height: 100%;top: 0;left: 0;background-color: #000;}
+		.img-box img { border-radius:5px;width: 60%;top: 20%;position: absolute;left: 20%;z-index:100;}
+		
+		#item-box input,textarea { color:#333 !important;}
+				
+		#item-list { background-color:#F1F1F1;}
+		#item-list li{ position:relative;color:#333;background-color:#FFFFFF;}
+		#item-list li .right-box { position: absolute;height: 100%;width: 25%;right: 0;top:0;}
+		
+		.am-icon-close { display:none;color: #FFF;z-index: 1001;position: absolute;right: 20px;top: 30px;}
+		
+		.blank-title { background-color:#ffffff;color:#E66629;border-radius: 5px;}
+		.border-r5 { border-radius:0.5em;}
+		.div-w-inbox { border-bottom:1px solid #EAEAEA;}
+		.div-w-inbox-1:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#E54E47;}
+		.div-w-inbox-2:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#F9AE49;}
+		.div-w-inbox-3:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#43BCFC;}
+		.div-w-inbox-4:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#04BF77;}
+		.div-w-inbox-5:before { content:"";width:3px;height:70%;position:absolute;top:15%;left:-6px;background-color:#E54E47;}
+		
+		.bg{
+			width:100%;
+			height:20px;
+			background:#E66629;
+			background-image:-webkit-gradient(linear,50% 0,0 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)    
+							),
+							-webkit-gradient(linear,50% 0,100% 100%,
+												from(transparent),
+												color-stop(.5,transparent),
+												color-stop(.5,#F1F1F1),
+												to(#F1F1F1)                                            
+							);
+			background-image:-moz-linear-gradient(50% 0 -45deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							),-moz-linear-gradient(50% 0 -135deg,
+										transparent,
+										transparent 50%,
+										#d86707 50%,
+										#d86707                                            
+							);                                
+			background-size:13px 6px;
+			background-repeat:repeat-x;
+			background-position:0 100%;                    
+		}
+		
+		/* all sign style
+		.ratyli .rate{color: #ccc; font-size: 24px;}
+		 */
+		 .ratyli .rate{color: #fe5845; font-size: 24px;}
+		
+		/* empty sign style */
+		.ratyli .rate-empty{color: #666;}
+		
+		/* full sign style after rating*/
+		.ratyli.rated .rate-full{color: #fe5845;}
+		
+		/* active signs (hover)*/
+		.ratyli .rate-active{color: #a94039;}
+		.demo{float:left; width:18%; padding:30px 1%; text-align:center;}
+		@media screen and (max-width: 920px) {
+			.demo{float:none; width:90%; padding:20px 5%;}
+		}
+	</style>
+</head>
+<body>
+<div><span id="op_result"></span></div>
+<i onClick="showclose();" class="am-icon-close am-text-xxl"></i>
+<div id="component" class="img-box"><img id="container" src=""></div>
+<div id="op_loading"><span class="op-loading" ><i class="am-icon-spinner am-icon-spin"></i><i class="msg">加载中...</i></span></div>
+<div><span id="op_result"></span></div>
+<section id="item-box">
+	<fieldset class="am-margin-0 am-padding-vertical-sm am-text-center bg"></fieldset>
+    <div class="w-100 am-margin-bottom-sm"></div>
+    <volist name="orderlist" id="order">
+    	
+            <div class="am-padding-xs am-text-sm blank-title">
+            <i class="am-icon-building-o am-text-lg"></i>&nbsp;&nbsp;预订单号：{$order.hospitalorder_id}
+            </div>
+            <ul class="am-g am-g-collapse am-padding-bottom-sm am-padding-horizontal-xs am-margin-bottom-sm bg-f">
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">进度：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">
+                    	<a href="javascript:showdetail('{$order.hospitalorder_id}')">
+                        {$order.status_name}</div>
+                        </a>
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">接单人备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$order.admin_remark}</div>
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">下单人备注：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$order.remark}</div>
+                </li>
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-4 am-text-sm am-text-left">时间：</div>
+                    <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$order.preapply_time}</div>
+                </li>
+             </ul>
+	</volist>
+    <div class="am-g am-g-collapse am-padding-vertical-sm">
+    	<div class="am-u-sm-12 am-text-center">
+        	<if condition="$delivery.status eq 1 and $delivery.is_driver eq 1">
+            <!--  <div class="am-u-sm-12"><button type="button" class="am-btn am-btn-primary am-text-sm w-80 border-r-5 btn-send">发 车</button></div>
+            -->
+            </if>            	
+        </div>
+    </div>
+</section>
+</body>
+<script>
+//var url = U ( 'addon/Hospital/Hospital/myorderdetail/oid/' . $oid .'/token/'.$token );
+function showdetail(orderid){
+	var url = '{:U('addon/Hospital/Hospital/myorderdetail/oid/_myhostpitalid/token/'.$token)}';
+	url = url.replace('_myhostpitalid',orderid);
+	window.location.href = url;
+}
+</script>
+</html>
