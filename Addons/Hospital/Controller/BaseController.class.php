@@ -9,6 +9,13 @@ class BaseController extends AddonsController {
 		$param['open_id'] = $openid;
 		$param['is_valid'] = 1;
 		$user = D ( "weichatuser" )->where ($param )->find ();
+		/***
+		if(1==1){
+			$param['open_id'] = 'oTluev1QV127An0QQYTj2w8N0ILQ';
+			$param['is_valid'] = 1;
+			$user = D ( "weichatuser" )->where ($param )->find ();
+			return $user;
+		}***/
 		if (!empty ( $user )) {
 			if ($user['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
 				return $user;
@@ -34,6 +41,22 @@ class BaseController extends AddonsController {
 			}
 		}
 		return false;
+	}
+	
+	protected function orderPrivilege($user){
+		if($user['type']==WeichatuserModel::USER_TYPE_HOSPITAL or 
+				($user['type']==WeichatuserModel::USER_TYPE_AGENT and $user['level']==WeichatuserModel::USER_LEVEL_NORMAL)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	protected function driverPrivilege($user){
+		if( $user['type']==WeichatuserModel::USER_TYPE_AGENT and $user['level']==WeichatuserModel::USER_LEVEL_DRIVER){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/* 发送回复模板消息到微信平台 */

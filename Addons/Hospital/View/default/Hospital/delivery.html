@@ -148,6 +148,25 @@
             <div class="am-u-sm-4 am-text-sm am-text-left">状态：</div>
             <div class="am-u-sm-8 am-text-sm am-text-right c-g delivery_status">{$delivery.status_name}</div>
         </li>
+        <if condition="$delivery.status eq 1"><!--未发车-->
+            <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+            <li class="am-u-sm-12">
+                <div class="am-u-sm-4 am-text-sm am-text-left">创建时间：</div>
+                <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$delivery.create_time}</div>
+            </li>
+        <elseif condition="$delivery.status eq 2"/><!--已发车-->
+            <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+            <li class="am-u-sm-12">
+                <div class="am-u-sm-4 am-text-sm am-text-left">发车时间：</div>
+                <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$delivery.delivery_time}</div>
+            </li>
+        <else/><!--已签收-->
+            <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+            <li class="am-u-sm-12">
+                <div class="am-u-sm-4 am-text-sm am-text-left">签收时间：</div>
+                <div class="am-u-sm-8 am-text-sm am-text-right c-g">{$delivery.modify_time}</div>
+            </li>
+        </if>
         <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
         <li class="am-u-sm-12">
             <div class="am-u-sm-4 am-text-sm am-text-left">货品明细：</div>

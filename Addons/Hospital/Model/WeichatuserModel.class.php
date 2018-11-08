@@ -25,4 +25,11 @@ class WeichatuserModel extends Model{
 	//微信用户状态-关闭权限
 	const USER_STATUS_CLOSED = 4;
 	
+	
+	//用户级别
+	const USER_LEVEL_NORMAL = 1;   //普通用户
+	const USER_LEVEL_DRIVER = 101;   //司机
+	const USER_LEVEL_ADMIN = 2;		//管理员
+
+	
 }

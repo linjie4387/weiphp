@@ -13,13 +13,13 @@
  */
 return array(
 		// 数据库配置
-        'DB_SMPSS' => 'mysql://smpsstest:smpssnopwd@127.0.0.1:25306/smpss_mk',
+        'DB_SMPSS' => 'mysql://wphp2D:HQdbFbeG2S5RXefH@127.0.0.1:35306/smpss',
 	'DB_TYPE'   => 'mysql', // 数据库类型
         'DB_HOST'   => '127.0.0.1', // 服务器地址
-        'DB_NAME'   => 'weiphp_mk', // 数据库名
-        'DB_USER'   => 'root', // 用户名
-        'DB_PWD'    => 'w16eqwED',  // 密码
-        'DB_PORT'   => '25306', // 端口
+        'DB_NAME'   => 'weiphp', // 数据库名
+        'DB_USER'   => 'wphp2D', // 用户名
+        'DB_PWD'    => 'HQdbFbeG2S5RXefH',  // 密码
+        'DB_PORT'   => '35306', // 端口
         'DB_PREFIX' => 'wp_', // 数据库表前缀
 		'DB_PARAMS' => array (
 				\PDO::ATTR_CASE => \PDO::CASE_NATURAL 
@@ -55,11 +55,19 @@ return array(
 		'UPLOAD_LOCAL_CONFIG' => array (),
 		
 		// 七牛上传文件驱动配置
+		//'UPLOAD_QINIU_CONFIG' => array (
+		//		'accessKey' => 'bJA25NRmnM8bDKT5eTvc28p3YhKp3WptCrVdoDri',
+		//		'secrectKey' => 'oejEow0iSPV9RHBS7CDKZ_KhVn8Q2QCW6uGEoYAj',
+		//		'bucket' => 'zxyl',
+		//		'domain' => 'http://7xs04f.com1.z0.glb.clouddn.com/',
+		//		'timeout' => 3600 
+		//),
+		// 七牛上传文件驱动配置
 		'UPLOAD_QINIU_CONFIG' => array (
 				'accessKey' => 'bJA25NRmnM8bDKT5eTvc28p3YhKp3WptCrVdoDri',
 				'secrectKey' => 'oejEow0iSPV9RHBS7CDKZ_KhVn8Q2QCW6uGEoYAj',
 				'bucket' => 'zxyl',
-				'domain' => 'http://7xs04f.com1.z0.glb.clouddn.com/',
+				'domain' => 'http://pic.chens.mobi/',
 				'timeout' => 3600 
 		),
 		

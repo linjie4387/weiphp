@@ -1,7 +1,7 @@
 <?php
 return array (
 		"admin.server.url" => array (
-				"value" => "http://adminmk.chens.science/index.php/io/weiphp/updateuser" 
+				"value" => "http://admin.chens.mobi/index.php/io/weiphp/updateuser" 
 		),
 		"juhe.api.url" => array (
 				"value" => "http://v.juhe.cn/sms/send" 
@@ -13,18 +13,15 @@ return array (
 				"value" => 'on' 
 		),
 		"template.token" => array(
-				"value" => 'gh_f65f6e4b3478'
+				"value" => 'gh_7d0ac53ebf4a'
 		),
 		"template.order.confirm" => array(
-				"value" => 'EEF2jSjMxwqYyGYxTofob8zqLNbdCzTr9aSj1vm1nNw'
+				"value" => '26BeaYS4TM1OqG-Th_tGYWlO2KKKg8P6V_say_Z2UhU'
 		),
 		"template.delivery.confirm" => array(
-				"value" => 'SHvemqAviM4_2ajfu6TLgbYRZC-PstR5HmPxDGgm9eM'
+				"value" => 'EP-MOHpBHUcs2u1tea__EiD0-mtuxlYCfxXv2-tT-Is'
 		),
 		"template.delivery.notify" => array(
-				"value" => 'KraI_HWm5Vhep0t4X-NbMsY_FZkIFF_aN59Le09a8oE'
-		),
-		"template.delivery.evaluate" => array(
-				"value" => 'O-mhWCM-sivMTSLNMHn9tqX0fHdS_vtrobVogXcN3uc'
+				"value" => '5UhrUJ26b0Li4hZEweW1GXGef2QtDQkAzPflmSjoGzE'
 		) 
 );

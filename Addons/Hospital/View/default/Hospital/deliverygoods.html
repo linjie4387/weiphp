@@ -158,9 +158,24 @@
         <li class="am-u-sm-12">
             <div class="am-u-sm-12 am-text-sm am-text-left">接单备注：{$item.order_remark}</div>
         </li>
-        
+        <if condition="$item.delivery_status eq 1"><!-- 已发车 -->
+            <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+            <li class="am-u-sm-12">
+                <div class="am-u-sm-12 am-text-sm am-text-left">最后处理时间：{$item.modify_time}</div>
+            </li>
+       		<if condition="$item.sign_status gt 1"><!-- 已签收 -->
+                <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+                <li class="am-u-sm-12">
+                    <div class="am-u-sm-12 am-text-sm am-text-left">签收备注：{$item.remark}</div>
+                </li>
+            </if>
+		<else/><!-- 未发车 -->
+            <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
+            <li class="am-u-sm-12">
+                <div class="am-u-sm-12 am-text-sm am-text-left">任务创建时间：{$item.create_time}</div>
+            </li>
+        </if>
         <hr data-am-widget="divider" class="am-u-sm-12 am-divider am-divider-dashed m-5" />
-        
         <li class="am-u-sm-12">
             <div class="am-u-sm-4 am-text-sm am-text-left">状态：</div>
             <div class="am-u-sm-8 am-text-sm am-text-right c-g">

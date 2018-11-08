@@ -18,7 +18,13 @@ class HospitalController extends BaseController {
 	function placeOrder() {
 		$user = $this->validuser ();
 		if ($user) {
-			if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
+			if ($user ['status'] != WeichatuserModel::USER_STATUS_NORMAL) {
+				$this->assign("title", "访问权限异常");
+				$this->assign("content", "您的账号状态未通过审核");
+				$this->display ( "Hospital/show" );
+			}
+			if($user['type']==WeichatuserModel::USER_TYPE_HOSPITAL or 
+				($user['type']==WeichatuserModel::USER_TYPE_AGENT and $user['level']==WeichatuserModel::USER_LEVEL_NORMAL)){
 				$map ['hospital_id'] = $user ['hospital_id'];
 				$officelist = D ( 'office' )->where ( $map )->select ();
 				$this->assign ( "officelist", $officelist );
@@ -29,7 +35,9 @@ class HospitalController extends BaseController {
 				$this->assign("companylist", $companylist);
 				
 				$this->display ( "Hospital/order" );
-			} else {
+			}else{
+				$this->assign("title", "访问权限异常");
+				$this->assign("content", "您没有权限访问该页面");
 				$this->display ( "Hospital/show" );
 			}
 		} else {
@@ -150,10 +158,19 @@ class HospitalController extends BaseController {
 	function listOrder() {
 		$user = $this->validuser ();
 		if ($user) {
-			if($user['type']==3){//如果是代下单用户，则查看本人处理过的历史配送任务。
+			if($user ['status'] != WeichatuserModel::USER_STATUS_NORMAL){
+				$this->assign("title", "访问权限异常");
+				$this->assign("content", "您的账号未通过审核");
+				$this->display ( "Hospital/show" );
+			}
+			//echo ($user['type']."==".WeichatuserModel::USER_TYPE_HOSPITAL."<br>");
+			//echo ($user['type']."==".WeichatuserModel::USER_TYPE_AGENT." and ".$user['level']."==".WeichatuserModel::USER_LEVEL_NORMAL."<br>");
+			//echo ($user['type']."==".WeichatuserModel::USER_TYPE_AGENT." and ".$user['level']."==".WeichatuserModel::USER_LEVEL_DRIVER);
+			
+			if($this->driverPrivilege($user)){//如果是司机/送货员，则查看本人处理过的历史配送任务。
 				$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1")->find();
-				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and b.open_id='".$user ['open_id']."'");
-				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status >2" )->page ( $page, $pageSize )->select ();
+				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and a.status =1 and b.open_id='".$user ['open_id']."'");
+				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status >2" )->order('delivery_id desc')->page ( $page, $pageSize )->select ();
 				
 				foreach ( $delivery as &$deli ) {
 					$map = array (
@@ -176,7 +193,7 @@ class HospitalController extends BaseController {
 	
 				$this->assign("deliverylist", $delivery);
 				$this->display ( "Hospital/undelivery" );				
-			}else{  //如果是医院用户，则查看历史订单
+			}elseif($this->orderPrivilege($user) ){  //如果是医院用户，则查看历史订单
 				if ($user ['status'] == WeichatuserModel::USER_STATUS_NORMAL) {
 					$map ['weichatuser_id'] = $user ['weichatuser_id'];
 					$page = I ( 'page' ) ? I ( 'page' ) : 1;
@@ -224,6 +241,10 @@ class HospitalController extends BaseController {
 				} else {
 					$this->display ( "Hospital/show" );
 				}
+			}else{
+				$this->assign("title", "访问权限异常");
+				$this->assign("content", "您没有权限访问该页面");
+				$this->display ( "Hospital/show" );
 			}
 		} else {
 			redirect ( U ( 'regist' ) );
@@ -581,9 +602,9 @@ class HospitalController extends BaseController {
 		}
 	}
 	/**
-	 * 未派送的送货单
+	 * 未处理的待办
 	 */
-	function myundelivery() {
+	function myundealevent() {
 		$user = $this->validuser ();
 		//if($user){
 		//}else{
@@ -593,13 +614,13 @@ class HospitalController extends BaseController {
 		if ($user) {
 			$page = I ( 'page' ) ? I ( 'page' ) : 1;
 			//$pageSize = I ( 'pagesize' ) ? I ( 'pagesize' ) : 10;
-			$pageSize = 100;
+			$pageSize = 30;
 			//司机、代下单用户，查看未配送的订单
-			if($user['type'] == '3'){
+			if( $this->driverPrivilege($user)){//如果是代下单用户，则查看本人处理过的历史配送任务。
 				$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1")->find();
-				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and b.open_id='".$user ['open_id']."'");
+				$deliveryman = D ( 'deliveryman' )->query("select a.* from smpss_deliveryman a,smpss_weichatuser b where a.weichatuser_id = b.weichatuser_id and a.status =1 and b.open_id='".$user ['open_id']."'");
 				$count = D ( 'delivery' )->where("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status <=2" )->count ();
-				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status <=2" )->page ( $page, $pageSize )->select ();
+				$delivery = D ( 'delivery' )->where ("driver_deliveryman_id=".$deliveryman[0]['deliveryman_id']." and status <=2" )->order('delivery_id desc')->page ( $page, $pageSize )->select ();
 				
 				foreach ( $delivery as &$deli ) {
 					$map = array (
@@ -622,9 +643,9 @@ class HospitalController extends BaseController {
 	
 				$this->assign("deliverylist", $delivery);
 				$this->display ( "Hospital/undelivery" );
-			}else{
+			}elseif($this->orderPrivilege($user)){
 				//查出待处理的预订单
-				$orderlist = D ( 'hospitalorder' )->where ("weichatuser_id=".$user['weichatuser_id']." and status =2" )->page ( $page, $pageSize )->select ();
+				$orderlist = D ( 'hospitalorder' )->where ("weichatuser_id=".$user['weichatuser_id']." and status =2" )->order('hospitalorder_id desc')->page ( $page, $pageSize )->select ();
 				foreach ( $orderlist as &$order ) {
 					$map = array (
 							"key_id" => DatadictModel::KEY_ORDER_STATUS, // 送单状态
@@ -639,6 +660,10 @@ class HospitalController extends BaseController {
 				$this->assign("orderlist", $orderlist);
 				$this->assign("token",$token);
 				$this->display( "Hospital/undealorderlist" );
+			}else{
+				$this->assign("title", "访问权限异常");
+				$this->assign("content", "您没有权限访问该页面");
+				$this->display ( "Hospital/show" );
 			}
 		} else {
 			redirect ( U ( 'regist' ) );
@@ -651,11 +676,10 @@ class HospitalController extends BaseController {
 		$user = $this->validuser ();
 		if ($user) {
 			$delivery_id = I("id");
-			//$from = I("from");
-			$delivery = D("delivery")->where("delivery_id = $delivery_id")->find();
+			$delivery = D("delivery")->where("delivery_id = ".$delivery_id)->find();
 			$delivery_status = D ( 'datadict' )->where ( "key_id = ".DeliveryModel::KEY_DELIVERY_STATUS." and value = ".$delivery['status'] )->find();
 			$delivery['status_name'] = $delivery_status['name'];
-			$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1")->find();
+			$driver = D('deliveryman')->where("weichatuser_id = ".$user['weichatuser_id']." and is_driver = 1 and status = 1")->find();
 			
 			if($driver){
 				if($driver['deliveryman_id'] == $delivery['driver_deliveryman_id']){
@@ -793,8 +817,12 @@ class HospitalController extends BaseController {
 						$customer = D('weichatuser')->join('smpss_order on smpss_order.weichatuser_id=smpss_weichatuser.weichatuser_id')
 										->where("smpss_order.order_id={$order['order_id']}")->find();
 						error_log("open_id:".$customer['open_id']);
+						$goodstype = '货物';
+						if($deliveryWithGoods['is_for_goods']=='0'){
+							$goodstype = '发票';
+						}
 						$openid = $customer['open_id'];
-						$content ['first'] = "您好，您的货物正在配送中，请做好接货准备。";
+						$content ['first'] = "您好，您的".$goodstype."正在配送中，请做好接货准备。";
 						$content ['keyword1'] = $order['order_id'];//订单编号
 						$content ['keyword2'] = $order['name'];//收货人
 						$content ['keyword3'] = $order['hospital_name'].$order['office_name'];//收获地址
@@ -807,13 +835,13 @@ class HospitalController extends BaseController {
 						
 						$this->_sendTemplateMsg($openid, $content, $tpl, "", $token);
 					}
+					
 					if(!$res){
 						$this->error ( "系统异常：" . $db->getDbError () );
 					}
 				}
-				//redirect ( U ( 'mydelivery' ) );
-				//error_log("---------id:".$delivery_id);
-				$this->redirect("mydelivery", array("id"=>$delivery_id));
+				$this->mydeliverygoods();
+				//$this->redirect("mydelivery", array("id"=>$delivery_id));
 			}else {
 				redirect ( U ( 'mydeliverygoods' ) );
 			}
@@ -1005,7 +1033,7 @@ class HospitalController extends BaseController {
 		$openid = $weichatuser['open_id'];
 		error_log ($openid);
 		
-		$content ['first'] = "您好，您的货物已".$oper."，送货单号".$withGoods['delivery_id']."。";
+		$content ['first'] = "您好，您的".$goodstype."已".$oper."，送货单号".$withGoods['delivery_id']."。";
 		$content ['keyword1'] = $withGoods['order_id'];//订单编号
 		$content ['keyword2'] = $weichatuser['name'];//收货人
 		$content ['keyword3'] = $order['hospital_name'].$order['office_name'];//收获地址
