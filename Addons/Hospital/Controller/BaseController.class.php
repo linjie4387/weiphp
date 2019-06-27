@@ -11,7 +11,7 @@ class BaseController extends AddonsController {
 		$user = D ( "weichatuser" )->where ($param )->find ();
 		/***
 		if(1==1){
-			$param['open_id'] = 'oTluev1QV127An0QQYTj2w8N0ILQ';
+			$param['open_id'] = 'of7oJs_WkpRH46PxXQTMAz9bOhfM';
 			$param['is_valid'] = 1;
 			$user = D ( "weichatuser" )->where ($param )->find ();
 			return $user;

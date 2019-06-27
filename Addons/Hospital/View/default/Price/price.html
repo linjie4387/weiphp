@@ -1,0 +1,140 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>价格查询</title>
+<link href="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head> 
+<body> 
+<div data-role="page" id='pageone'>
+    <div data-role="content" style="padding-top:0px">
+        <div data-role="controlgroup"  data-type="horizontal">
+            <select name="province" id="province"  >
+                <option value="-1" selected>请选择省份</option>
+            </select>
+            <select name="city" id="city"  >
+                <option  value="-1" selected>请选择市区</option>
+            </select>
+        </div>
+        <div data-role="fieldcontain" style="padding-top:0px">
+            <label for="fullname">计重(kg)：</label>
+            <input type="text" name="weight" id="weight" data-inline="true">
+            <label for="fullname">计泡-长(cm)：</label>
+            <input type="text" name="long" id="long">
+            <label for="fullname">计泡-宽(cm)：</label>
+            <input type="text" name="width" id="width">
+            <label for="fullname">计泡-高(cm)：</label>
+            <input type="text" name="height" id="height">
+        </div>
+        <a href="#pagetwo" id="bts_search_price" data-role="button">价格查询</a>
+    </div>
+</div>
+<div data-role="page" id='pagetwo'>
+    <div data-role="content" style="padding-top:0px">
+            <div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">快递（元）：</label>
+            <input type="text" name="kd_y" id="kd_y" data-inline="true" value="">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="kd_sx" id="kd_sx" value="">
+        </div>
+		<div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">航运（元）：</label>
+            <input type="text" name="hy_y" id="hy_y" data-inline="true" value="">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="hy_sx" id="hy_sx" value="">
+        </div>
+		<div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">航空（元）：</label>
+            <input type="text" name="hk_y" id="hk_y" data-inline="true" value="">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="hk_sx" id="hk_sx" value="">
+        </div>
+        <a href="#pageone" data-role="button">返回查询</a>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+	loadprivince();
+	$('#province').change(function(){
+		var parent_id  = $('#province').val();
+		$("#city").empty();
+		$('#city').append('<option value="-1" selected>请选择市区</option>');
+		loadcity(parent_id);
+	});
+	
+	$('#bts_search_price').click(function(){
+		var url = "{:U('/addon/Hospital/Price/loadprice')}";
+		var params  = {}
+		params['province']=$('#province').val();
+		params['city']=$('#city').val();
+		params['weight']=$('#weight').val();
+		params['long']=$('#long').val();
+		params['width']=$('#width').val();
+		params['height']=$('#height').val();
+		
+		$.post(url,
+			params,
+			function(res){
+				if(res.errcode == 0){
+					var data = res.data;
+					if(data){
+						$('#kd_y').val(data.kd_y);
+						$('#kd_sx').val(data.kd_sx);
+						$('#hy_y').val(data.hy_y);
+						$('#hy_sx').val(data.hy_sx);
+						$('#hk_y').val(data.hk_y);
+						$('#hk_sx').val(data.hk_sx);
+					}
+				}
+			}
+		);
+	});
+
+});
+
+function loadprivince(){
+	var params={}
+	$.post("{:U('/addon/Hospital/Price/loadprivince')}",
+	params,
+	function(res){
+		if(res.errcode == 0){
+			var data = res.data;
+			if(data){
+				for(var i=0;i<data.length;i++){
+					var line = data[i];
+					var region_id = line.region_id;
+					var region_name = line.region_name;
+					$('#province').append('<option value="'+region_id+'">'+region_name+'</option>');
+				}
+			}
+		}
+	});
+}
+
+function loadcity(parent_id){
+	var params={'parent_id':parent_id}
+	$.post("{:U('/addon/Hospital/Price/loadcity')}",
+	params,
+	function(res){
+		if(res.errcode == 0){
+			var data = res.data;
+			if(data){
+				for(var i=0;i<data.length;i++){
+					var line = data[i];
+					var region_id = line.region_id;
+					var region_name = line.region_name;
+					$('#city').append('<option value="'+region_id+'">'+region_name+'</option>');
+				}
+			}
+		}
+	});
+}
+</script>

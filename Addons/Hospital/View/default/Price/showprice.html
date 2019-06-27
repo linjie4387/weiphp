@@ -1,0 +1,51 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>价格查询</title>
+<link href="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="{:ADDON_PUBLIC_PATH}/jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head> 
+<body> 
+<div data-role="page">
+    <div data-role="content" style="padding-top:0px">
+    	<form id="search_form" method="post" action="{:U('/addon/Hospital/Price/searchprice')}">
+        <div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">快递（元）：</label>
+            <input type="text" name="kd_y" id="kd_y" data-inline="true" value="{$kd_y}">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="kd_sx" id="kd_sx" value="{$kd_sx}">
+        </div>
+		<div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">航运（元）：</label>
+            <input type="text" name="hy_y" id="hy_y" data-inline="true" value="{$hy_y}">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="hy_sx" id="hy_sx" value="{$hy_sx}">
+        </div>
+		<div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">航空（元）：</label>
+            <input type="text" name="hk_y" id="" data-inline="true" value="{$hk_y}">
+            <label for="fullname">时效（天）：</label>
+            <input type="text" name="hk_sx" id="hk_sx" value="{$hk_sx}">
+        </div>
+        <button id="bts_search_price">返回查询</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+/*
+$(function(){
+	$('#bts_search_price').unbind('click');
+	$('#bts_search_price').click(function(){
+		alert('1');
+		window.location.href="{:U('/addon/Hospital/Price/searchprice')}";
+	});
+});*/
+</script>

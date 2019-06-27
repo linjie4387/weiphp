@@ -11,7 +11,7 @@
 <file name="HospitalController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131519210303012000" remote="131541725800000000" Dst="0" />
 <file name="HospitalController.class.php" server="114.55.27.112//root/websites/jchx/weiphp/" local="131861160796211355" remote="131873412410000000" Dst="0" />
 <file name="OrderEventController.class.php" server="114.55.27.112//root/websites/jchx/weiphp/" local="131861160796221386" remote="131873412410000000" Dst="0" />
-<file name="HospitalController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131519210303012000" remote="131519211660000000" Dst="0" />
+<file name="HospitalController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131861160796211355" remote="131996218660000000" Dst="0" />
 <file name="OrderEventController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131515984187970000" remote="131541723600000000" Dst="0" />
 <file name="BaseController.class.php" server="114.55.27.112//root/websites/weiphp/" local="131692836328663260" remote="131692838790000000" Dst="0" />
 <file name="DeviceController.class.php" server="114.55.27.112//root/websites/weiphp/" local="131439716418780014" remote="131506950610000000" Dst="0" />
@@ -30,10 +30,11 @@
 <file name="EngineerController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436139557006009" remote="131514247430000000" Dst="0" />
 <file name="EvaluateController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436139557016009" remote="131514247430000000" Dst="0" />
 <file name="TestController.class.php" server="114.55.27.112//root/websites/weiphp_mk/" local="131436139557066009" remote="131514247440000000" Dst="0" />
-<file name="BaseController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131519083350842000" remote="131519085720000000" Dst="0" />
+<file name="BaseController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="132060648649649161" remote="132060648720000000" Dst="0" />
 <file name="DeviceController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131439716418780014" remote="131439716410000000" Dst="0" />
 <file name="EngineerController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131436139557006009" remote="131436139550000000" Dst="0" />
 <file name="EvaluateController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131436139557016009" remote="131436139550000000" Dst="0" />
 <file name="TestController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="131436139557066009" remote="131436139550000000" Dst="0" />
 <file name="AboutController.class.php" server="114.55.27.112//root/websites/jchx/weiphp/" local="131861160796181275" remote="131873412400000000" Dst="0" />
+<file name="PriceController.class.php" server="114.55.27.112//root/websites/test/weiphp/" local="132060398512086759" remote="132060399410000000" Dst="0" />
 </dwsync>
