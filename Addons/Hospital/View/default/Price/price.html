@@ -20,14 +20,22 @@
             </select>
         </div>
         <div data-role="fieldcontain" style="padding-top:0px">
+        	<div>
             <label for="fullname">计重(kg)：</label>
             <input type="text" name="weight" id="weight" data-inline="true">
+            </div>
+            <div>
             <label for="fullname">计泡-长(cm)：</label>
             <input type="text" name="long" id="long">
+            <div>
+            </div>
             <label for="fullname">计泡-宽(cm)：</label>
             <input type="text" name="width" id="width">
+            <div>
+            </div>
             <label for="fullname">计泡-高(cm)：</label>
             <input type="text" name="height" id="height">
+            </div>
         </div>
         <a href="#pagetwo" id="bts_search_price" data-role="button">价格查询</a>
     </div>
@@ -43,7 +51,7 @@
         </div>
 		<div data-role="fieldcontain" style="padding-top:0px">
         	<br>
-            <label for="fullname">航运（元）：</label>
+            <label for="fullname">货运（元）：</label>
             <input type="text" name="hy_y" id="hy_y" data-inline="true" value="">
             <label for="fullname">时效（天）：</label>
             <input type="text" name="hy_sx" id="hy_sx" value="">
@@ -55,7 +63,20 @@
             <label for="fullname">时效（天）：</label>
             <input type="text" name="hk_sx" id="hk_sx" value="">
         </div>
+		<div data-role="fieldcontain" style="padding-top:0px">
+        	<br>
+            <label for="fullname">中铁（元）：</label>
+            <input type="text" name="zt_y" id="zt_y" data-inline="true" value="">
+            <label for="fullname">中铁（天）：</label>
+            <input type="text" name="zt_sx" id="zt_sx" value="">
+        </div>
         <a href="#pageone" data-role="button">返回查询</a>
+        <p>1	计泡规则	（cm）</p>
+        <p>     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（长*宽*高）/6000	</p>
+        <p>2	以上费用不含取送货费用</p>				
+        <p>3	木包装费用为240/</p>	
+        <p>4	云仓收费为每拍2元/天（1200*800*1000）</p>
+        <p>5	开票价格加收9%，（13%专票）</p>
     </div>
 </div>
 </body>
@@ -71,6 +92,16 @@ $(function(){
 	});
 	
 	$('#bts_search_price').click(function(){
+		
+		$('#kd_y').val('');
+		$('#kd_sx').val('');
+		$('#hy_y').val('');
+		$('#hy_sx').val('');
+		$('#hk_y').val('');
+		$('#hk_sx').val('');
+		$('#zt_y').val('');
+		$('#zt_sx').val('');
+		
 		var url = "{:U('/addon/Hospital/Price/loadprice')}";
 		var params  = {}
 		params['province']=$('#province').val();
@@ -83,6 +114,7 @@ $(function(){
 		$.post(url,
 			params,
 			function(res){
+				console.log( JSON.stringify(res));
 				if(res.errcode == 0){
 					var data = res.data;
 					if(data){
@@ -92,6 +124,8 @@ $(function(){
 						$('#hy_sx').val(data.hy_sx);
 						$('#hk_y').val(data.hk_y);
 						$('#hk_sx').val(data.hk_sx);
+						$('#zt_y').val(data.zt_y);
+						$('#zt_sx').val(data.zt_sx);
 					}
 				}
 			}
